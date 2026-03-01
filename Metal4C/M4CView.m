@@ -10,6 +10,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation M4CView
+- (nonnull instancetype)initWithFrame:(CGRect)frameRect device:(nullable id<MTLDevice>)device
+{
+    return [super initWithFrame:frameRect device:device];
+}
+
+- (nonnull instancetype)initWithCoder:(nonnull NSCoder *)coder
+{
+    return [super initWithCoder:coder];
+}
 
 @end
 

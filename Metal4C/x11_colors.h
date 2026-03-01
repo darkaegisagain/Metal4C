@@ -10,4 +10,12 @@
 
 #include <stdio.h>
 
+typedef struct {
+    unsigned char r, g, b;
+    const char *name;
+    float fr, fg, fb, fa;
+} X11Color;
+
+X11Color *getX11Color(const char *name);
+
 #endif /* x11_colors_h */

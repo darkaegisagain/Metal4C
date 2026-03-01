@@ -5,12 +5,25 @@
 //  Created by Michael Larson on 2/21/26.
 //
 
+
+#include "ShaderTypes.h"
+#include "metal4c.h"
+
+#ifdef __OBJC__
+
 #import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN
+typedef struct {
+    id<MTLFunction> vertexFunction;
+    id<MTLFunction> fragmentFunction;
+} ShaderFunctionPair;
 
 @interface Renderer : NSObject
 
-@end
+- (Renderer *)initWithMTKView:(MTKView *)view context:(MTRenderContext)ctx;
+- (void) flushToScreen;
 
-NS_ASSUME_NONNULL_END
+@end
+#endif // __OBJC__
+
+#include "Renderer_Extern.h"

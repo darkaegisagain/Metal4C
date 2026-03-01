@@ -9,4 +9,18 @@
 #define Renderer_Extern_h
 
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#pragma mark C interface routines
+void mtFlushVertexEng(MTRenderContext ctx);
+
+#ifdef __cplusplus
+}
+#endif
+
+
+
 #endif /* Renderer_Extern_h */

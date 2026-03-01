@@ -5,7 +5,7 @@
 //  Created by Michael Larson on 2/16/26.
 //
 
-#import <Foundation/Foundation.h>
+#import <MetalKit/MetalKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

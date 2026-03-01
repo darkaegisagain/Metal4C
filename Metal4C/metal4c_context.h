@@ -1,5 +1,5 @@
 //
-//  metal4c_ctx.h
+//  metal4c_context.h
 //  Metal4C
 //
 //  Created by Michael Larson on 2/22/26.
@@ -32,9 +32,14 @@ enum {
 #define MAX_MODELVIEW_MATRIX_DEPTH      64
 #define MAX_MATRIX_DEPTH                8
 
+#define NUM_VERTICES                    36
+
 #define STATE(_var_)            _ctx->state._var_
 #define MAT(_var_)              _ctx->state.mat._var_
 #define VENG(_var_)             _ctx->vert_eng._var_
+
+#define newPtr(_type_)                  (_type_ *)malloc(sizeof(_type_))
+#define newArray(_type_, _count_)       (_type_ *)malloc(sizeof(_type_) * _count_)
 
 typedef struct MTRenderContextRec_t *MTRenderContext;
 
@@ -145,6 +150,8 @@ typedef struct MTRenderContextRec_t {
         Vertex4ColorNormalTex   *vertices;
     } vert_eng;
 } MTRenderContextRec;
+
+extern MTRenderContext _ctx;
 
 void mtErrorFunc(const char *err, const char *func);
 void mtWarningFunc(const char *err, const char *func);

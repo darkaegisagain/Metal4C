@@ -32,9 +32,8 @@
 #endif
 
 #include "hash_table.h"
-#include "glm_context.h"
 
-void initHashTable(HashTable *ptr, GLuint size)
+void initHashTable(HashTable *ptr, unsigned size)
 {
     size_t len;
 
@@ -49,7 +48,7 @@ void initHashTable(HashTable *ptr, GLuint size)
     bzero(ptr->keys, len);
 }
 
-bool resizeHashTableToFitName(HashTable *table, GLuint name)
+unsigned resizeHashTableToFitName(HashTable *table, unsigned name)
 {
     // CRITICAL SECURITY FIX: Prevent integer overflow in hash table resizing
     // some calls allow the user to specify a name...
@@ -107,7 +106,7 @@ bool resizeHashTableToFitName(HashTable *table, GLuint name)
     return true;
 }
 
-GLuint getNewName(HashTable *table)
+unsigned getNewName(HashTable *table)
 {
     if (table->free_keys)
     {
@@ -121,7 +120,7 @@ GLuint getNewName(HashTable *table)
         return obj->name;
     }
         
-    GLuint name;
+    unsigned name;
     
     name = table->current_name++;
     
@@ -141,7 +140,7 @@ GLuint getNewName(HashTable *table)
     return name;
 }
 
-bool isValidKey(HashTable *table, GLuint name)
+unsigned isValidKey(HashTable *table, unsigned name)
 {
     if (name >= table->size)
     {
@@ -151,7 +150,7 @@ bool isValidKey(HashTable *table, GLuint name)
     return table->keys[name].valid;
 }
 
-void *getKeyData(HashTable *table, GLuint name)
+void *getKeyData(HashTable *table, unsigned name)
 {
     assert(table);
     
@@ -164,7 +163,7 @@ void *getKeyData(HashTable *table, GLuint name)
     return table->keys[name].data;
 }
 
-void insertHashElement(HashTable *table, GLuint name, void *data)
+void insertHashElement(HashTable *table, unsigned name, void *data)
 {
     assert(table);
 
@@ -184,7 +183,7 @@ void insertHashElement(HashTable *table, GLuint name, void *data)
     table->keys[name].data = data;
 }
 
-void deleteHashElement(HashTable *table, GLuint name)
+void deleteHashElement(HashTable *table, unsigned name)
 {
     assert(table);
 

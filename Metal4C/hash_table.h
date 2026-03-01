@@ -21,31 +21,29 @@
 #ifndef hash_table_h
 #define hash_table_h
 
-#include "glcorearb.h"
-
 typedef struct HashObj_t {
     struct HashObj_t *next;
-    GLuint name;
-    GLboolean valid;
+    unsigned name;
+    unsigned valid;
     void *data;
 } HashObj;
 
 typedef struct {
     size_t size;
-    GLuint num_free_names;
-    GLuint current_name;
+    unsigned num_free_names;
+    unsigned current_name;
     HashObj *keys;
     HashObj *free_keys;
 } HashTable;
 
-HashTable *createHashTable(GLuint size);
-void initHashTable(HashTable *ptr, GLuint size);
-GLuint getNewName(HashTable *table);
+HashTable *createHashTable(unsigned size);
+void initHashTable(HashTable *ptr, unsigned size);
+unsigned getNewName(HashTable *table);
 
-void insertHashElement(HashTable *table, GLuint name, void *data);
-void deleteHashElement(HashTable *table, GLuint name);
+void insertHashElement(HashTable *table, unsigned name, void *data);
+void deleteHashElement(HashTable *table, unsigned name);
 
-bool isValidKey(HashTable *table, GLuint name);
-void *getKeyData(HashTable *table, GLuint name);
+unsigned isValidKey(HashTable *table, unsigned name);
+void *getKeyData(HashTable *table, unsigned name);
 
 #endif /* hash_table_h */

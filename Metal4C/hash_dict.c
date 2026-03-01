@@ -8,7 +8,7 @@
 // to give credit where due
 // copied from https://github.com/exebook/hashdict.c
 
-#include "hashdict.h"
+#include "hash_dict.h"
 #define hash_func meiyan
 
 static inline uint32_t meiyan(const char *key, int count) {
@@ -33,7 +33,7 @@ struct keynode *keynode_new(char*k, int l) {
     node->key = malloc(l);
     memcpy(node->key, k, l);
     node->next = 0;
-    node->value = -1;
+    node->value = NULL;
     return node;
 }
 
@@ -149,7 +149,7 @@ void dic_forEach(struct dictionary* dic, enumFunc f, void *user) {
         if (dic->table[i] != 0) {
             struct keynode *k = dic->table[i];
             while (k) {
-                if (!f(k->key, k->len, &k->value, user)) return;
+                if (!f(k->key, k->len, (void *)&k->value, user)) return;
                 k = k->next;
             }
         }

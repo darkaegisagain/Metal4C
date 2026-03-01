@@ -1,3 +1,11 @@
+//
+//  mtErrorFunc.h
+//  Metal4C
+//
+//  Created by Michael Larson on 2/28/26.
+//
+
+
 
 
 static MTVec4 MakeVec4(MTfloat x, MTfloat y, MTfloat z, MTfloat w)
