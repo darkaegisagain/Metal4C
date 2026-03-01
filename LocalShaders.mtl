@@ -1,0 +1,129 @@
+//
+//  LocalShaders.metal
+//  Metal4C
+//
+//  Created by Michael Larson on 2/27/26.
+//
+
+#include <metal_stdlib>
+#include <simd/simd.h>
+
+using namespace metal;
+
+// Include header shared between this Metal shader code and C code executing Metal API commands
+#include "ShaderTypes.h"
+
+// data structs passed between vertex shader and fragment shader
+struct RasterizerDataColor
+{
+    float4 position [[position]];
+    float4 color;
+    float point_size [[point_size]];
+};
+
+struct RasterizerDataTex
+{
+    float4 position [[position]];
+    float2 st;
+    float point_size [[point_size]];
+};
+
+struct RasterizerDataNormal
+{
+    float4 position [[position]];
+    float3 normal;
+    float point_size [[point_size]];
+};
+
+struct RasterizerDataColorTex
+{
+    float4 position [[position]];
+    float4 color;
+    float2 st;
+    float point_size [[point_size]];
+};
+
+struct RasterizerDataColorNormal
+{
+    float4 position [[position]];
+    float4 color;
+    float3 normal;
+    float point_size [[point_size]];
+};
+
+struct RasterizerDataTexNormal
+{
+    float4 position [[position]];
+    float3 normal;
+    float2 st;
+    float point_size [[point_size]];
+};
+
+struct RasterizerDataColorTexNormal
+{
+    float4 position [[position]];
+    float4 color;
+    float2 st;
+    float3 normal;
+    float point_size [[point_size]];
+};
+
+float4 genericVertexProcessing(float4 position, constant UploadedState *uploaded_state)
+{
+    float4 ret_position;
+    
+    float2 pixelSpacePosition = position.xy;
+    float2 viewportSize = uploaded_state->viewport_size;
+    
+    ret_position = simd_float4(0.0, 0.0, 0.0, 1.0);
+    ret_position.xy = float2(-1.0, -1.0) + pixelSpacePosition / (viewportSize / 2);
+    
+    return ret_position;
+}
+
+float getPointSize(constant UploadedState *uploaded_state)
+{
+    float point_size;
+    
+    // not sure if I have to set the point size for lines
+    if (uploaded_state->prim_type == PrimitiveTypePoint)
+    {
+        point_size = uploaded_state->point_size;
+    }
+    else
+    {
+        point_size = 1.0;
+    }
+    
+    return point_size;
+}
+
+
+// ****************************************************************************************************
+// Normal Vertex Function
+// ****************************************************************************************************
+vertex RasterizerDataNormal
+vertexShaderNormalLocal(constant Vertex4ColorNormalTex *vertexArray [[ buffer(VertexInputIndexVertices) ]],
+                    constant UploadedState *uploaded_state  [[ buffer(VertexInputIndexUploadedState) ]],
+                    uint vertexID [[ vertex_id ]])
+{
+    RasterizerDataNormal out;
+    
+    out.position = genericVertexProcessing(vertexArray[vertexID].position, uploaded_state);
+    out.point_size = getPointSize(uploaded_state);
+
+    out.normal = vertexArray[vertexID].normal[0];
+
+    return out;
+}
+
+// Fragment function
+fragment float4
+fragmentShaderNormalLocal(RasterizerDataNormal in [[stage_in]],
+                  texture2d<half> colorTexture [[ texture(TextureIndexBaseColor) ]])
+{
+    // return the color of the texture
+    return float4(in.normal.x, in.normal.y, in.normal.z, 1.0);
+}
+
+
