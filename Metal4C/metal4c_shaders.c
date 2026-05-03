@@ -42,120 +42,199 @@ MTuint mtCreateShaderLibrary(const char *str)
     return lib->name;
 }
 
-void mtBindShaderFunctions(MTuint name, const char *vertex, const char *fragment, MTuint rendermode)
+static MTuint createShaderLibrary(MTRenderContextRec *ctx, const char *str)
 {
-    MTShaderLibrary *shader_lib;
-    MTbool vertex_shader_found;
-    MTbool fragment_shader_found;
-    MTuint vertex_shader_index;
-    MTuint fragment_shader_index;
-    const char *vertex_func;
-    const char *fragment_func;
-
-    if (rendermode >= kRendermodeMax)
+    MTShaderLibrary *lib;
+    
+    lib = newPtr(MTShaderLibrary);
+    lib->src = strdup(str);
+    
+    ctx->mt_render_funcs.mtlCreateShaderLibrary(_ctx, lib);
+    
+    if (lib->mtl_lib == NULL)
     {
-        mtWarningFunc("unit >= kRendermodeMax", __FUNCTION__);
-        return;
+        mtWarningFunc("mtCreateShaderLibrary failed", __FUNCTION__);
+        free(lib);
+        return 0;
     }
     
+    MTuint name;
+    
+    name = getNewName(ctx->state.shader_table);
+    insertHashElement(ctx->state.shader_table, name, lib);
+    
+    lib->name = name;
+    
+    return lib->name;
+}
+static MTbool bindShaderFunc(MTuint name, const char *func_name, MTShaderBinding *binding, const char *_calling_func_)
+{
     // handle null binding
     if (name == 0)
     {
-        STATE(shader_bindings[rendermode].lib) = 0;
-        STATE(shader_bindings[rendermode].vertex_shader) = NULL;
-        STATE(shader_bindings[rendermode].fragment_shader) = NULL;
+        binding->lib    = 0;
+        binding->shader = NULL;
         
-        return;
+        return true;
     }
 
     // handle bad params
-    if ((vertex == NULL) || (fragment == NULL))
+    if (func_name == NULL)
     {
-        if (vertex == NULL)
-        {
-            mtWarningFunc("vertex == NULL, leaving state unchanged", __FUNCTION__);
-        }
+        mtWarningFunc("func_name == NULL, leaving state unchanged", _calling_func_);
 
-        if (fragment == NULL)
-        {
-            mtWarningFunc("fragment == NULL, leaving state unchanged", __FUNCTION__);
-        }
-
-        return;
+        return false;
     }
+    
+    MTShaderLibrary *shader_lib;
     
     shader_lib = getKeyData(STATE(shader_table), name);
     
     if (shader_lib == NULL)
     {
-        mtWarningFunc("Shader lib not found, leaving state unchanged", __FUNCTION__);
-        return;
+        mtWarningFunc("Shader lib not found, leaving state unchanged", _calling_func_);
+        return false;
     }
     
+    MTbool shader_found;
+    MTuint shader_index;
+    const char *lib_func;
+
     // init to null so compiler won't bitch
-    vertex_func = NULL;
-    fragment_func = NULL;
+    lib_func = NULL;
     
-    vertex_shader_found = false;
-    fragment_shader_found = false;
-    vertex_shader_index = 0;
-    fragment_shader_index = 0;
+    shader_found = false;
+    shader_index = 0;
 
     for(int i=0; i<shader_lib->function_count; i++)
     {
-        printf("%s, %s vs %s\n", vertex, fragment, shader_lib->functions[i]);
-        
-        if (vertex_shader_found == 0)
+        if (shader_found == 0)
         {
-            if (!strcmp(vertex, shader_lib->functions[i]))
+            if (!strcmp(func_name, shader_lib->function_names[i]))
             {
-                vertex_shader_found = true;
-                vertex_shader_index = i;
-                vertex_func = shader_lib->functions[i]; // use this pointer name to bind to
-            }
-        }
-        
-        if (fragment_shader_found == 0)
-        {
-            if (!strcmp(fragment, shader_lib->functions[i]))
-            {
-                fragment_shader_found = true;
-                fragment_shader_index = i;
-                fragment_func = shader_lib->functions[i]; // use this pointer name to bind to
-            }
-        }
-        
-        // we found both shaders so we can bind them
-        if (vertex_shader_found &&
-            fragment_shader_found)
-        {
-            STATE(shader_bindings[rendermode].lib) = name;
-            STATE(shader_bindings[rendermode].vertex_shader)   = vertex_func;
-            STATE(shader_bindings[rendermode].fragment_shader) = fragment_func;
+                shader_found = true;
+                shader_index = i;
+                lib_func = shader_lib->function_names[i]; // use this pointer name to bind to
 
-            // for debugging
-            STATE(shader_bindings[rendermode].vertex_shader_index)   = vertex_shader_index;
-            STATE(shader_bindings[rendermode].fragment_shader_index) = fragment_shader_index;
-
-            return;
+                binding->lib            = name;
+                binding->shader         = lib_func;
+                binding->shader_lib     = shader_lib;
+                binding->shader_index   = shader_index;
+                
+                return true;
+            }
         }
     }
     
-    if (vertex_shader_found == false)
-    {
-        char warning[128];
-        
-        snprintf(warning, 128, "vertex shader %s not found in library %d, leaving state unchanged\n", vertex, name);
+    char warning[128];
+    
+    snprintf(warning, 128, "shader %s not found in library %d, leaving state unchanged\n", func_name, name);
 
-        mtWarningFunc(warning, __FUNCTION__);
+    mtWarningFunc(warning, _calling_func_);
+    
+    return false;
+}
+
+static MTbool checkRendermodes(MTVertexShaderMode vertex_rendermode, MTFragmentShaderMode fragment_rendermode)
+{
+    switch(vertex_rendermode)
+    {
+        case MTVertexShaderModeNonInstanced:
+        case MTVertexShaderModeInstanced:
+            break;
+            
+        default:
+            mtWarningFunc("invalid vertex rendermode", __FUNCTION__);
+            return false;
     }
 
-    if (fragment_shader_found == false)
+    switch(fragment_rendermode)
     {
-        char warning[128];
-        
-        snprintf(warning, 128, "fragment shader %s not found in library %d, leaving state unchanged\n", fragment, name);
+        case MTFragmentShaderModeColor:
+        case MTFragmentShaderModeNormal:
+        case MTFragmentShaderModeColorNormal:
+        case MTFragmentShaderModeTexture:
+        case MTFragmentShaderModeColorTexture:
+        case MTFragmentShaderModeNormalTexture:
+        case MTFragmentShaderModeColorNormalTexture:
+        case MTFragmentShaderModeAll:
+            break;
 
-        mtWarningFunc(warning, __FUNCTION__);
+        default:
+            mtWarningFunc("invalid vertex rendermode", __FUNCTION__);
+            return false;
+    }
+
+    return true;
+}
+
+void mtBindImmModeVertexShader(MTVertexShaderMode vertex_rendermode, MTFragmentShaderMode fragment_rendermode, MTuint name, const char *vertex)
+{
+    if (checkRendermodes(vertex_rendermode, fragment_rendermode))
+    {
+        if(fragment_rendermode == MTFragmentShaderModeAll)
+        {
+            for(int i=MTFragmentShaderModeColor; i<MTFragmentShaderModeMax; i++)
+            {
+                bindShaderFunc(name, vertex, &STATE(vertex_shader_binding[vertex_rendermode][i]), __FUNCTION__);
+            }
+        }
+        else
+        {
+            bindShaderFunc(name, vertex, &STATE(vertex_shader_binding[vertex_rendermode][fragment_rendermode]), __FUNCTION__);
+        }
     }
 }
+
+void mtBindImmModeFragmentShader(MTVertexShaderMode vertex_rendermode, MTFragmentShaderMode fragment_rendermode, MTuint name, const char *fragment)
+{
+    if (checkRendermodes(vertex_rendermode, fragment_rendermode))
+    {
+        if(fragment_rendermode == MTFragmentShaderModeAll)
+        {
+            for(int i=MTFragmentShaderModeColor; i<MTFragmentShaderModeMax; i++)
+            {
+                bindShaderFunc(name, fragment, &STATE(vertex_shader_binding[vertex_rendermode][i]), __FUNCTION__);
+            }
+        }
+        else
+        {
+            bindShaderFunc(name, fragment, &STATE(fragment_shader_binding[vertex_rendermode][fragment_rendermode]), __FUNCTION__);
+        }
+    }
+}
+
+void mtBindVertexShaderToVertexArray(MTuint vao_name, MTuint lib_name, const char *vertex)
+{
+    MTVertexArray *vao;
+    MTShaderBinding *binding;
+    
+    vao = getKeyData(STATE(vertex_array_table), vao_name);
+    
+    if (vao == NULL)
+    {
+        return;
+    }
+    
+    binding = &vao->vertex_shader_binding;
+    
+    bindShaderFunc(lib_name, vertex, binding, __FUNCTION__);
+}
+
+void mtBindFragmentToVertexArray(MTuint vao_name, MTuint lib_name, const char *fragment)
+{
+    MTVertexArray *vao;
+    MTShaderBinding *binding;
+    
+    vao = getKeyData(STATE(vertex_array_table), vao_name);
+    
+    if (vao == NULL)
+    {
+        return;
+    }
+    
+    binding = &vao->vertex_shader_binding;
+    
+    bindShaderFunc(lib_name, fragment, binding, __FUNCTION__);
+}
+

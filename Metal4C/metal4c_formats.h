@@ -4,6 +4,8 @@
 //
 //  Created by Michael Larson on 2/22/26.
 //
+//  From Apple headers and left in a format that doesn't require Apple headers
+//
 
 #ifndef metal4c_formats_h
 #define metal4c_formats_h
@@ -190,18 +192,8 @@ typedef enum MTPixelFormat_t {
     MTPixelFormatASTC_12x10_HDR        = 235,
     MTPixelFormatASTC_12x12_HDR        = 236,
 
-    /*!
-     @constant MTPixelFormatGBGR422
-     @abstract A pixel format where the red and green channels are subsampled horizontally.  Two pixels are stored in 32 bits, with shared red and blue values, and unique green values.
-     @discussion This format is equivalent to YUY2, YUYV, yuvs, or GL_RGB_422_APPLE/GL_UNSIGNED_SHORT_8_8_REV_APPLE.   The component order, from lowest addressed byte to highest, is Y0, Cb, Y1, Cr.  There is no implicit colorspace conversion from YUV to RGB, the shader will receive (Cr, Y, Cb, 1).  422 textures must have a width that is a multiple of 2, and can only be used for 2D non-mipmap textures.  When sampling, ClampToEdge is the only usable wrap mode.
-     */
     MTPixelFormatGBGR422                = 240,
 
-    /*!
-     @constant MTPixelFormatBGRG422
-     @abstract A pixel format where the red and green channels are subsampled horizontally.  Two pixels are stored in 32 bits, with shared red and blue values, and unique green values.
-     @discussion This format is equivalent to UYVY, 2vuy, or GL_RGB_422_APPLE/GL_UNSIGNED_SHORT_8_8_APPLE. The component order, from lowest addressed byte to highest, is Cb, Y0, Cr, Y1.  There is no implicit colorspace conversion from YUV to RGB, the shader will receive (Cr, Y, Cb, 1).  422 textures must have a width that is a multiple of 2, and can only be used for 2D non-mipmap textures.  When sampling, ClampToEdge is the only usable wrap mode.
-     */
     MTPixelFormatBGRG422                = 241,
 
     /* Depth */
@@ -217,6 +209,93 @@ typedef enum MTPixelFormat_t {
 
     MTPixelFormatX32_Stencil8           = 261,
     MTPixelFormatX24_Stencil8           = 262,
+    MTPixelFormatMax                    = 263
 } MTPixelFormat;
+
+typedef enum MTVertexFormat {
+    MTVertexFormatInvalid = 0,
+    
+    MTVertexFormatUChar2 = 1,
+    MTVertexFormatUChar3 = 2,
+    MTVertexFormatUChar4 = 3,
+    
+    MTVertexFormatChar2 = 4,
+    MTVertexFormatChar3 = 5,
+    MTVertexFormatChar4 = 6,
+    
+    MTVertexFormatUChar2Normalized = 7,
+    MTVertexFormatUChar3Normalized = 8,
+    MTVertexFormatUChar4Normalized = 9,
+    
+    MTVertexFormatChar2Normalized = 10,
+    MTVertexFormatChar3Normalized = 11,
+    MTVertexFormatChar4Normalized = 12,
+    
+    MTVertexFormatUShort2 = 13,
+    MTVertexFormatUShort3 = 14,
+    MTVertexFormatUShort4 = 15,
+    
+    MTVertexFormatShort2 = 16,
+    MTVertexFormatShort3 = 17,
+    MTVertexFormatShort4 = 18,
+    
+    MTVertexFormatUShort2Normalized = 19,
+    MTVertexFormatUShort3Normalized = 20,
+    MTVertexFormatUShort4Normalized = 21,
+    
+    MTVertexFormatShort2Normalized = 22,
+    MTVertexFormatShort3Normalized = 23,
+    MTVertexFormatShort4Normalized = 24,
+    
+    MTVertexFormatHalf2 = 25,
+    MTVertexFormatHalf3 = 26,
+    MTVertexFormatHalf4 = 27,
+    
+    MTVertexFormatFloat = 28,
+    MTVertexFormatFloat2 = 29,
+    MTVertexFormatFloat3 = 30,
+    MTVertexFormatFloat4 = 31,
+    
+    MTVertexFormatInt = 32,
+    MTVertexFormatInt2 = 33,
+    MTVertexFormatInt3 = 34,
+    MTVertexFormatInt4 = 35,
+    
+    MTVertexFormatUInt = 36,
+    MTVertexFormatUInt2 = 37,
+    MTVertexFormatUInt3 = 38,
+    MTVertexFormatUInt4 = 39,
+    
+    MTVertexFormatInt1010102Normalized = 40,
+    MTVertexFormatUInt1010102Normalized = 41,
+    
+    MTVertexFormatUChar4Normalized_BGRA = 42,
+    
+    MTVertexFormatUChar = 45,
+    MTVertexFormatChar = 46,
+    MTVertexFormatUCharNormalized = 47,
+    MTVertexFormatCharNormalized = 48,
+    
+    MTVertexFormatUShort = 49,
+    MTVertexFormatShort = 50,
+    MTVertexFormatUShortNormalized = 51,
+    MTVertexFormatShortNormalized = 52,
+    
+    MTVertexFormatHalf = 53,
+
+    MTVertexFormatFloatRG11B10 = 54,
+    MTVertexFormatFloatRGB9E5 = 55,
+    
+    MTVertexFormatMax,
+} MTVertexFormat;
+
+typedef enum MTVertexStepFunction {
+    MTVertexStepFunctionConstant = 0,
+    MTVertexStepFunctionPerVertex = 1,
+    MTVertexStepFunctionPerInstance = 2,
+    MTVertexStepFunctionPerPatch = 3,
+    MTVertexStepFunctionPerPatchControlPoint = 4,
+    MTVertexStepFunctionMax,
+} MTVertexStepFunction;
 
 #endif /* metal4c_formats_h */

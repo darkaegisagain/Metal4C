@@ -53,13 +53,12 @@ MTRenderContext mtCreateContext(void)
     
     ctx = newPtr(MTRenderContextRec);
     
-    ctx->state.render_mode = kRendermodeColor;
     ctx->state.clear_color = MakeVec4(0.0, 0.0, 0.0, 1.0);
     
     // force loading of default shader and clear color
     ctx->dirty_state = (DIRTY_PIPELINE | DIRTY_RENDER_PASS | DIRTY_TEXTURE | DIRTY_UPLOADED_STATE);
     
-    ctx->vert_eng.prim_type             = PrimitiveTypeNone;
+    ctx->vert_eng.prim_type             = MTPrimitiveTypeNone;
     ctx->vert_eng.num_vertices          = NUM_VERTICES;
     ctx->vert_eng.vertices              = newArray(Vertex4ColorNormalTex, NUM_VERTICES);
     ctx->vert_eng.current_vertex        = 0;
@@ -80,17 +79,21 @@ MTRenderContext mtCreateContext(void)
     ctx->state.buffer_table = newPtr(HashTable);
     ctx->state.texture_table = newPtr(HashTable);
     ctx->state.shader_table = newPtr(HashTable);
-
+    ctx->state.vertex_array_table = newPtr(HashTable);
+    ctx->state.texture_desc_table = newPtr(HashTable);
+    
     initHashTable(ctx->state.buffer_table, 32);
     initHashTable(ctx->state.texture_table, 32);
     initHashTable(ctx->state.shader_table, 4);
-
-    ctx->state.mat.mode = kMatrixMode_Modelview;
-    for(int mode = kMatrixMode_Modelview; mode<kMatrixMode_Max; mode++)
+    initHashTable(ctx->state.vertex_array_table, 4);
+    initHashTable(ctx->state.texture_desc_table, 4);
+    
+    ctx->state.mat.mode = MTMatrixMode_Modelview;
+    for(int mode = MTMatrixMode_Modelview; mode<MTMatrixMode_Max; mode++)
     {
         switch(mode)
         {
-            case kMatrixMode_Modelview:
+            case MTMatrixMode_Modelview:
                 ctx->state.mat.stks[mode].max_depth = MAX_MODELVIEW_MATRIX_DEPTH;
                 break;
                 
@@ -120,19 +123,6 @@ void mtSetCurrentContext(MTRenderContext ctx)
 MTRenderContext mtGetCurrentContext(void)
 {
     return _ctx;
-}
-
-void mtSetRendermode(MTuint mode)
-{
-    if ((mode >= kRendermodeColor) && (mode < kRendermodeMax))
-    {
-        STATE(render_mode) = mode;
-        _ctx->dirty_state |= (DIRTY_PIPELINE | DIRTY_UPLOADED_STATE);
-
-        return;
-    }
-    
-    mtWarningFunc("Invalid rendermode", __FUNCTION__);
 }
 
 void mtSetPointSize(MTfloat size)

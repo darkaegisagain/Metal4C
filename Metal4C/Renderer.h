@@ -6,7 +6,7 @@
 //
 
 
-#include "ShaderTypes.h"
+#include "metal4c_shader_types.h"
 #include "metal4c.h"
 
 #ifdef __OBJC__

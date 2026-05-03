@@ -14,10 +14,10 @@
 #include "metal4c_context.h"
 #include "Renderer_Extern.h"
 #include "hash_table.h"
-#include "matrix_lib.h"
+#include "metal_math_utils.h"
 
 // current context
-extern MTRenderContext _ctx;
+extern MTRenderContextRec *_ctx;
 
 static inline MTMatrixStack *currentMat(void)
 {
@@ -26,30 +26,6 @@ static inline MTMatrixStack *currentMat(void)
     mode = MAT(mode);
     
     return &MAT(stks[mode]);
-}
-
-static inline mat4_t tos(void)
-{
-    MTMatrixStack *stk;
-    
-    stk = currentMat();
-    
-    MTuint sp;
-    sp = stk->sp;
-    
-    return stk->stack[sp];
-}
-
-static inline float *tosf(void)
-{
-    MTMatrixStack *stk;
-    
-    stk = currentMat();
-    
-    MTuint sp;
-    sp = stk->sp;
-    
-    return (float *)stk->stack[sp];
 }
 
 static inline bool validPush(void)
@@ -71,7 +47,7 @@ static inline bool validPush(void)
 static inline bool validPop(void)
 {
     MTMatrixStack *stk;
-
+    
     stk = currentMat();
     
     if (stk->sp > 0)
@@ -84,14 +60,39 @@ static inline bool validPop(void)
     return false;
 }
 
+static inline MTuint projSP(void)
+{
+    return MAT(stks[MTMatrixMode_Projection].sp);
+}
+
+static inline MTuint mvSP(void)
+{
+    return MAT(stks[MTMatrixMode_ModelView].sp);
+}
+
+static inline MTuint curSP(void)
+{
+    MTuint mode;
+    
+    mode = MAT(mode);
+    
+    return MAT(stks[mode].sp);
+}
+
+void mtUpdateMVP(void)
+{
+    MAT(mvp) = matrix_multiply(MAT(stks[MTMatrixMode_Projection].stack[projSP()]),
+                               MAT(stks[MTMatrixMode_ModelView].stack[mvSP()]));
+}
+
 void mtMatrixMode(MTenum mode)
 {
     switch(mode)
     {
-        case kMatrixMode_Modelview:
-        case kMatrixMode_Projection:
-        case kMatrixMode_Texture:
-        case kMatrixMode_Color:
+        case MTMatrixMode_ModelView:
+        case MTMatrixMode_Projection:
+        case MTMatrixMode_Texture:
+        case MTMatrixMode_Color:
             break;
             
         default:
@@ -104,79 +105,125 @@ void mtMatrixMode(MTenum mode)
 
 void mtLoadMatrixf(MTfloat m[16])
 {
-    mat4_set(m, tosf());
+    MTuint mode;
+    
+    mode = MAT(mode);
+    
+    memcpy(&MAT(stks[mode].stack[curSP()]), m, sizeof(matrix_float4x4));
+    
     _ctx->dirty_state |= DIRTY_UPLOADED_STATE;
 }
 
 void mtMultMatrixf(MTfloat m[16])
 {
-    // the mat lib handles when src2 == dst
-    mat4_multiply(m, tosf(), tosf());
+    MTuint mode;
+    
+    mode = MAT(mode);
+    
+    matrix_float4x4 src;
+    
+    memcpy(&src, m, sizeof(matrix_float4x4));
+    
+    MAT(stks[mode].stack[curSP()]) = matrix_multiply(src, MAT(stks[mode].stack[curSP()]));
+    
     _ctx->dirty_state |= DIRTY_UPLOADED_STATE;
 }
 
 void mtLoadTransposeMatrixf(MTfloat m[16])
 {
-    mat4_set(m, tosf());
+    MTuint mode;
+    
+    mode = MAT(mode);
+    
+    matrix_float4x4 src;
+    
+    memcpy(&src, m, sizeof(matrix_float4x4));
+    
+    MAT(stks[mode].stack[curSP()]) = matrix_transpose(src);
+    
     _ctx->dirty_state |= DIRTY_UPLOADED_STATE;
 }
 
 void mtMultTransposeMatrixf(MTfloat m[16])
 {
-    mat4_transpose(m, tosf());
+    MTuint mode;
+    
+    mode = MAT(mode);
+    
+    matrix_float4x4 src;
+    
+    memcpy(&src, m, sizeof(matrix_float4x4));
+    
+    src = matrix_transpose(src);
+    
+    MAT(stks[mode].stack[curSP()]) = matrix_multiply(src, MAT(stks[mode].stack[curSP()]));
+
     _ctx->dirty_state |= DIRTY_UPLOADED_STATE;
 }
 
 void mtLoadIdentityf(void)
 {
-    mat4_identity(tosf());
+    MTuint mode;
+    
+    mode = MAT(mode);
+
+    MAT(stks[mode].stack[curSP()]) = matrix_identity_float4x4;
+    
     _ctx->dirty_state |= DIRTY_UPLOADED_STATE;
 }
 
 void mtRotatef(MTfloat theata, MTfloat x, MTfloat y, MTfloat z)
 {
-    float v[3];
+    MTuint mode;
     
-    v[0] = x;
-    v[1] = y;
-    v[2] = z;
-
-    mat4_rotate(tosf(), theata, v, tosf());
+    mode = MAT(mode);
+    
+    MAT(stks[mode].stack[curSP()]) = matrix4x4_rotation(theata, x, y, z);
+    
     _ctx->dirty_state |= DIRTY_UPLOADED_STATE;
 }
 
 void mtTranslatef(MTfloat x, MTfloat y, MTfloat z)
 {
-    float v[3];
+    MTuint mode;
     
-    v[0] = x;
-    v[1] = y;
-    v[2] = z;
+    mode = MAT(mode);
+    
+    MAT(stks[mode].stack[curSP()]) = matrix4x4_translation(vector3(x, y, z));
 
-    mat4_translate(tosf(), v, tosf());
     _ctx->dirty_state |= DIRTY_UPLOADED_STATE;
 }
 
 void mtScalef(MTfloat x, MTfloat y, MTfloat z)
 {
-    float v[3];
+    MTuint mode;
     
-    v[0] = x;
-    v[1] = y;
-    v[2] = z;
+    mode = MAT(mode);
+    
+    MAT(stks[mode].stack[curSP()]) = matrix4x4_scale(vector3(x, y, z));
 
-    mat4_scale(tosf(), v, tosf());
     _ctx->dirty_state |= DIRTY_UPLOADED_STATE;
 }
 
 void mtFrustrumf(MTfloat l, MTfloat r, MTfloat b, MTfloat t, MTfloat n, MTfloat f)
 {
-    mat4_frustum(l, r, b, t, n, f, tosf());
+    MTuint mode;
+    
+    mode = MAT(mode);
+
+    MAT(stks[mode].stack[curSP()]) = matrix_perspective_frustum_right_hand(l, r, b, t, n, f);
+    
+    _ctx->dirty_state |= DIRTY_UPLOADED_STATE;
 }
 
 void mtOrthof(MTfloat l, MTfloat r, MTfloat b, MTfloat t, MTfloat n, MTfloat f)
 {
-    mat4_ortho(l, r, b, t, n, f, tosf());
+    MTuint mode;
+    
+    mode = MAT(mode);
+
+    MAT(stks[mode].stack[curSP()]) = matrix_ortho_right_hand(l, r, b, t, n, f);
+
     _ctx->dirty_state |= DIRTY_UPLOADED_STATE;
 }
 
@@ -202,6 +249,20 @@ void mtPopMatrix(void)
     
     mtWarningFunc("matrix pop invalid", __FUNCTION__);
 }
+
+
+void mtPerspectivef(MTfloat angle, MTfloat ratio, MTfloat n, MTfloat f,
+                   MTfloat *b, MTfloat *t, MTfloat *l, MTfloat *r)
+ {
+    MTfloat scale;
+    
+    scale = tanf(angle * 0.5 * M_PI / 180) * n;
+
+    *r = ratio * scale;
+    *l = -*r;
+    *t = scale;
+    *b = -*t;
+ }
 
 void mtTexGenf(MTenum coord, MTenum pname, MTfloat param)
 {

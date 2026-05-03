@@ -1,8 +1,8 @@
 //
-//  LocalShaders.metal
+//  metal4c_shaders.metal
 //  Metal4C
 //
-//  Created by Michael Larson on 2/27/26.
+//  Created by Michael Larson on 2/21/26.
 //
 
 #include <metal_stdlib>
@@ -13,14 +13,10 @@ using namespace metal;
 // Include header shared between this Metal shader code and C code executing Metal API commands
 #include "metal4c_shader_types.h"
 
-#include "LocalShaderTypes.h"
-
-// data structs passed between vertex shader and fragment shader
 struct RasterizerData
 {
     float4 position [[position]];
     float4 color;
-    float4 instance_color;
     float2 st;
     float4 normal;
     float point_size [[point_size]];
@@ -39,7 +35,7 @@ float getPointSize(constant UploadedState *uploaded_state)
 {
     float point_size;
     
-    // not sure if I have to set the point size for lines
+    // not sure if I have to set the point size for lines 
     if (uploaded_state->prim_type == MTPrimitiveTypePoint)
     {
         point_size = uploaded_state->point_size;
@@ -56,26 +52,28 @@ float getPointSize(constant UploadedState *uploaded_state)
 // Vertex Function
 // ****************************************************************************************************
 vertex RasterizerData
-vertexShaderLocal(constant Vertex4ColorNormalTex *vertexArray [[ buffer(VertexInputIndexVertices) ]],
-                    constant UploadedState *uploaded_state  [[ buffer(VertexInputIndexUploadedState) ]],
-                    uint vertexID [[ vertex_id ]])
+vertexShader(constant Vertex4ColorNormalTex *vertexArray [[ buffer(VertexInputIndexVertices) ]],
+             constant UploadedState *uploaded_state  [[ buffer(VertexInputIndexUploadedState) ]],
+             uint vertexID [[ vertex_id ]])
 {
     RasterizerData out;
     
     out.position = genericVertexProcessing(vertexArray[vertexID].position, uploaded_state);
     out.point_size = getPointSize(uploaded_state);
 
-    out.normal = vertexArray[vertexID].normal[0];
+    out.color = vertexArray[vertexID].color;
+    out.st = vertexArray[vertexID].st[0];
+    out.normal = vertexArray[vertexID].normal;
 
     return out;
 }
 
 vertex RasterizerData
-vertexShaderInstancedLocal(constant Vertex4ColorNormalTex *vertexArray [[ buffer(VertexInputIndexVertices) ]],
-                           constant UploadedState *uploaded_state  [[ buffer(VertexInputIndexUploadedState) ]],
-                           constant LocalInstanceState *instance_array  [[ buffer(VertexInputIndexInstanceArray) ]],
-                           uint vertexID [[ vertex_id ]],
-                           uint instanceID [[ instance_id]])
+vertexShaderInstanced(constant Vertex4ColorNormalTex *vertexArray [[ buffer(VertexInputIndexVertices) ]],
+                      constant UploadedState *uploaded_state  [[ buffer(VertexInputIndexUploadedState) ]],
+                      constant InstanceState *instance_array  [[ buffer(VertexInputIndexInstanceArray) ]],
+                      uint vertexID [[ vertex_id ]],
+                      uint instanceID [[ instance_id]])
 {
     RasterizerData out;
     
@@ -87,37 +85,25 @@ vertexShaderInstancedLocal(constant Vertex4ColorNormalTex *vertexArray [[ buffer
     out.normal = vertexArray[vertexID].normal;
 
     return out;
-
-    out.instance_color = instance_array[instanceID].color;
-
-    return out;
 }
 
 // ****************************************************************************************************
 // Fragment functions
 // ****************************************************************************************************
 fragment float4
-fragmentShaderLocalLocalColor(RasterizerData in [[stage_in]],
-                         texture2d<half> colorTexture [[ texture(TextureIndexBaseColor) ]])
+fragmentShaderColor(RasterizerData in [[stage_in]])
 {
-    // return the color of the texture
-    return float4(in.color.x, in.color.y, in.color.z, 1.0);
+    return float4(in.color.x, in.color.y, in.color.z, in.color.w);
 }
 
 fragment float4
-fragmentShaderLocalColor(RasterizerData in [[stage_in]])
-{
-    return float4(in.color.x, in.color.y, in.color.z, 1.0);
-}
-
-fragment float4
-fragmentShaderLocalNormal(RasterizerData in [[stage_in]])
+fragmentShaderNormal(RasterizerData in [[stage_in]])
 {
     return float4(in.normal.x, in.normal.y, in.normal.z, 1.0);
 }
 
 fragment float4
-fragmentShaderLocalColorNormal(RasterizerData in [[stage_in]])
+fragmentShaderColorNormal(RasterizerData in [[stage_in]])
 {
     float4 n = float4(in.normal.x, in.normal.y, in.normal.z, 1.0);
     float4 c = float4(in.color.x, in.color.y, in.color.z, 1.0);
@@ -126,7 +112,7 @@ fragmentShaderLocalColorNormal(RasterizerData in [[stage_in]])
 }
 
 fragment float4
-fragmentShaderLocalTexture(RasterizerData in [[stage_in]],
+fragmentShaderTexture(RasterizerData in [[stage_in]],
                       texture2d<half> colorTexture [[ texture(TextureIndexBaseColor) ]])
 {
     constexpr sampler textureSampler (mag_filter::linear,
@@ -140,7 +126,7 @@ fragmentShaderLocalTexture(RasterizerData in [[stage_in]],
 }
 
 fragment float4
-fragmentShaderLocalColorTexture(RasterizerData in [[stage_in]],
+fragmentShaderColorTexture(RasterizerData in [[stage_in]],
                       texture2d<half> colorTexture [[ texture(TextureIndexBaseColor) ]])
 {
     float4 c = float4(in.color.x, in.color.y, in.color.z, 1.0);
@@ -156,7 +142,7 @@ fragmentShaderLocalColorTexture(RasterizerData in [[stage_in]],
 }
 
 fragment float4
-fragmentShaderLocalNormalTexture(RasterizerData in [[stage_in]],
+fragmentShaderNormalTexture(RasterizerData in [[stage_in]],
                       texture2d<half> colorTexture [[ texture(TextureIndexBaseColor) ]])
 {
     float4 n = float4(in.normal.x, in.normal.y, in.normal.z, 1.0);
@@ -172,7 +158,7 @@ fragmentShaderLocalNormalTexture(RasterizerData in [[stage_in]],
 }
 
 fragment float4
-fragmentShaderLocalColorNormalTexture(RasterizerData in [[stage_in]],
+fragmentShaderColorNormalTexture(RasterizerData in [[stage_in]],
                       texture2d<half> colorTexture [[ texture(TextureIndexBaseColor) ]])
 {
     float4 n = float4(in.normal.x, in.normal.y, in.normal.z, 1.0);

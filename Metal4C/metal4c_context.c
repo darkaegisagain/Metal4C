@@ -16,6 +16,9 @@
 #include "Renderer_Extern.h"
 #include "hash_table.h"
 
+static MTRenderContext      _currentContext = 0;
+static HashTable            *_context_table = NULL;
+
 static MTVec4 MakeVec4(MTfloat x, MTfloat y, MTfloat z, MTfloat w)
 {
     MTVec4 vec;
@@ -60,18 +63,38 @@ MTRenderContext mtCreateContext(void)
     MTRenderContextRec *ctx;
     
     ctx = newPtr(MTRenderContextRec);
-    
-    ctx->state.render_mode = kRendermodeColor;
+    zeroPtr(ctx, MTRenderContextRec);
+        
     ctx->state.clear_color = MakeVec4(0.0, 0.0, 0.0, 1.0);
     
+    ctx->state.clear_depth = 1.0;
+    ctx->state.depth_stencil_format = MTPixelFormatDepth32Float_Stencil8;
+//    ctx->state.depth_format = MTPixelFormatDepth32Float;
+    //    ctx->state.stencil_format = MTPixelFormatStencil8;
+    ctx->state.depth_test_min_bound = 0.0;
+    ctx->state.depth_test_max_bound = 1.0;
+    ctx->state.depth_test_mode = MTCompareFunctionNever;
+    ctx->state.front_stencil_desc.compare_func = MTStencilOperationKeep;
+    ctx->state.back_stencil_desc.compare_func = MTStencilOperationKeep;
+
+    ctx->state.vertex_shader_mode = MTVertexShaderModeNonInstanced;
+    ctx->state.fragment_shader_mode = MTFragmentShaderModeColor;
+
     // force loading of default shader and clear color
     ctx->dirty_state = (DIRTY_PIPELINE | DIRTY_RENDER_PASS | DIRTY_TEXTURE | DIRTY_UPLOADED_STATE);
     
-    ctx->vert_eng.prim_type             = PrimitiveTypeNone;
+    ctx->state.prim_type                = MTPrimitiveTypeNone;
+    
+    ctx->vert_eng.max_vertices          = MAX_VERTICES;
     ctx->vert_eng.num_vertices          = NUM_VERTICES;
     ctx->vert_eng.vertices              = newArray(Vertex4ColorNormalTex, NUM_VERTICES);
     ctx->vert_eng.current_vertex        = 0;
-    
+
+    ctx->vert_eng.max_indices           = MAX_INDICES;
+    ctx->vert_eng.num_indices           = NUM_INDICES;
+    ctx->vert_eng.indices               = newArray(MTuint, NUM_INDICES);
+    ctx->vert_eng.current_index         = 0;
+
     ctx->vert_eng.baseVertex.position   = MakeVec4(0.0, 0.0, 0.0, 0.0);
     ctx->vert_eng.baseVertex.color      = MakeColor(0.0, 0.0, 0.0, 1.0);
     
@@ -88,17 +111,24 @@ MTRenderContext mtCreateContext(void)
     ctx->state.buffer_table = newPtr(HashTable);
     ctx->state.texture_table = newPtr(HashTable);
     ctx->state.shader_table = newPtr(HashTable);
-
+    ctx->state.sampler_table = newPtr(HashTable);
+    ctx->state.vertex_array_table = newPtr(HashTable);
+    ctx->state.texture_desc_table = newPtr(HashTable);
+    ctx->state.sampler_desc_table = newPtr(HashTable);
+    
     initHashTable(ctx->state.buffer_table, 32);
     initHashTable(ctx->state.texture_table, 32);
     initHashTable(ctx->state.shader_table, 4);
+    initHashTable(ctx->state.sampler_table, 32);
+    initHashTable(ctx->state.vertex_array_table, 4);
+    initHashTable(ctx->state.texture_desc_table, 4);
+    initHashTable(ctx->state.sampler_desc_table, 4);
 
-    ctx->state.mat.mode = kMatrixMode_Modelview;
-    for(int mode = kMatrixMode_Modelview; mode<kMatrixMode_Max; mode++)
+    for(int mode = MTMatrixMode_ModelView; mode<MTMatrixMode_Max; mode++)
     {
         switch(mode)
         {
-            case kMatrixMode_Modelview:
+            case MTMatrixMode_ModelView:
                 ctx->state.mat.stks[mode].max_depth = MAX_MODELVIEW_MATRIX_DEPTH;
                 break;
                 
@@ -106,41 +136,79 @@ MTRenderContext mtCreateContext(void)
                 ctx->state.mat.stks[mode].max_depth = MAX_MATRIX_DEPTH;
                 break;
         }
+     
+        ctx->state.mat.stks[mode].stack = newArray(matrix_float4x4, ctx->state.mat.stks[mode].max_depth);
         
         for(int i=0; i<ctx->state.mat.stks[mode].max_depth; i++)
         {
-            ctx->state.mat.stks[mode].stack[i] = mat4_create(NULL);
-            mat4_identity(ctx->state.mat.stks[mode].stack[i]);
+            ctx->state.mat.stks[mode].stack[i] = matrix_identity_float4x4;
         }
         
         ctx->state.mat.stks[mode].sp = 0;
-        mtLoadIdentityf();
+    }
+
+    ctx->state.mat.mode = MTMatrixMode_ModelView;
+        
+    if (_context_table == NULL)
+    {
+        _context_table = newPtr(HashTable);
+        
+        initHashTable(_context_table, 4);
     }
     
-    return (MTRenderContext)ctx;
+    MTRenderContext ret;
+    
+    ret = getNewName(_context_table);
+    
+    insertHashElement(_context_table, ret, ctx);
+
+    return ret;
 }
 
 void mtSetCurrentContext(MTRenderContext ctx)
 {
-    _ctx = ctx;
-}
-
-MTRenderContext mtGetCurrentContext(void)
-{
-    return _ctx;
-}
-
-void mtSetRendermode(MTuint mode)
-{
-    if ((mode >= kRendermodeColor) && (mode < kRendermodeMax))
+    if (_context_table == NULL)
     {
-        STATE(render_mode) = mode;
-        _ctx->dirty_state |= (DIRTY_PIPELINE | DIRTY_UPLOADED_STATE);
+        mtWarningFunc("No contexts defined", __FUNCTION__);
+        return;
+    }
+    
+    if (ctx == 0)
+    {
+        _ctx = NULL;
 
         return;
     }
     
-    mtWarningFunc("Invalid rendermode", __FUNCTION__);
+    if (isValidKey(_context_table, ctx))
+    {
+        _currentContext = ctx;
+
+        _ctx = getKeyData(_context_table, ctx);
+        
+        return;
+    }
+}
+
+MTRenderContext mtGetCurrentContext(void)
+{
+    return _currentContext;
+}
+
+MTRenderContextRec *mtGetContextPtr(MTRenderContext ctx)
+{
+    if (_context_table == NULL)
+    {
+        mtWarningFunc("No contexts defined", __FUNCTION__);
+        return NULL;
+    }
+    
+    if (isValidKey(_context_table, ctx))
+    {
+        return getKeyData(_context_table, ctx);
+    }
+    
+    return NULL;
 }
 
 void mtSetPointSize(MTfloat size)

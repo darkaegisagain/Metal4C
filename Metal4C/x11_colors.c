@@ -820,6 +820,7 @@ X11Color *getX11Color(const char *name)
             pthread_join(thread, NULL);
         }
     
+        // search list while dictionary is made on another thread
         for(int i=0; x11_colors[i].name; i++)
         {
             if (!strcmp(name, x11_colors[i].name))
@@ -836,11 +837,10 @@ X11Color *getX11Color(const char *name)
         X11Color *color;
         
         color = *x11_color_dict->value;
-        
-//        printf("found %s\n", color->name);
-        
+                
         return color;
     }
 
     return NULL;
 }
+

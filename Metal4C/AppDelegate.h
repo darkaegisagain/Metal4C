@@ -16,6 +16,5 @@
 - (void)drawInMTKView:(nonnull MTKView *)view NS_SWIFT_UI_ACTOR;
 
 - (void)buttonClick:(nullable id)sender;
-- (void)colorWellClick:(nullable id)sender;
 @end
 

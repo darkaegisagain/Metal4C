@@ -1,5 +1,5 @@
 //
-//  ShaderTypes.h
+//  metal4c_shader_types.h
 //  Metal4C
 //
 //  Created by Michael Larson on 2/10/26.
@@ -10,14 +10,23 @@
 
 #include <simd/simd.h>
 
-typedef enum PrimitiveType {
-    PrimitiveTypePoint          = 0,
-    PrimitiveTypeLine           = 1,
-    PrimitiveTypeLineStrip      = 2,
-    PrimitiveTypeTriangle       = 3,
-    PrimitiveTypeTriangleStrip  = 4,
-    PrimitiveTypeNone,
-} PrimitiveType;
+typedef enum MTPrimitiveType {
+    MTPrimitiveTypePoint          = 0,
+    MTPrimitiveTypeLine           = 1,
+    MTPrimitiveTypeLineStrip      = 2,
+    MTPrimitiveTypeTriangle       = 3,
+    MTPrimitiveTypeTriangleStrip  = 4,
+    MTPrimitiveTypeNone,
+} MTPrimitiveType;
+
+typedef enum MTPritiveDrawStyle {
+    MTPrimitveDrawArray           = 0,
+    MTPrimitveDrawArrayInstance,
+    MTPrimitveDrawIndex,
+    MTPrimitveDrawIndexInstance,
+    MTPrimitveDrawIndexInstanceBase,
+    MTPrimitveDrawIndexOffsetInstanceBase,
+} MTPritiveDrawStyle;
 
 // Buffer index values shared between shader and C code to ensure Metal shader buffer inputs match
 //   Metal API buffer set calls
@@ -25,6 +34,7 @@ typedef enum VertexInputIndex
 {
     VertexInputIndexVertices         = 0,
     VertexInputIndexUploadedState    = 1,
+    VertexInputIndexInstanceArray    = 2,
 } VertexInputIndex;
 
 // Texture index values shared between shader and C code to ensure Metal shader buffer inputs match
@@ -37,11 +47,20 @@ typedef enum TextureIndex
 
 typedef struct
 {
-    vector_float2      viewport_size;
-    unsigned           render_mode;
-    unsigned           prim_type;
-    float              point_size;
+    vector_float2       viewport_size;
+    unsigned            prim_type;
+    float               point_size;
+    matrix_float4x4     mvp_matrix;
 } UploadedState;
+
+typedef struct
+{
+    vector_float4       pos;
+    vector_float4       color;
+    vector_float2       st;
+    vector_float4       rot;
+    vector_float2       pad;
+} InstanceState;
 
 typedef struct
 {
