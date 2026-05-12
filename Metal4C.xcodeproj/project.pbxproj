@@ -7,52 +7,309 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FFED71C82F3E854A000EA4BD /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFED71C72F3E854A000EA4BD /* MetalKit.framework */; };
+		FF880B1F2FA7C8210012D6F2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF880AF52FA7C8210012D6F2 /* AppDelegate.m */; };
+		FF880B312FA7C8210012D6F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF880AF72FA7C8210012D6F2 /* Assets.xcassets */; };
+		FF880B332FA7C8210012D6F2 /* Lenna_test_image.png in Resources */ = {isa = PBXBuildFile; fileRef = FF880AFD2FA7C8210012D6F2 /* Lenna_test_image.png */; };
+		FF880B342FA7C8210012D6F2 /* LocalShaders.mtl in Resources */ = {isa = PBXBuildFile; fileRef = FF880AFE2FA7C8210012D6F2 /* LocalShaders.mtl */; };
+		FF880B352FA7C8210012D6F2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF880B032FA7C8210012D6F2 /* MainMenu.xib */; };
+		FF880B382FA7C8210012D6F2 /* LocalShaderTypes.h in Resources */ = {isa = PBXBuildFile; fileRef = FF880AFF2FA7C8210012D6F2 /* LocalShaderTypes.h */; };
+		FF880B512FA7C8DC0012D6F2 /* Metal4c.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF880B4A2FA7C8DC0012D6F2 /* Metal4c.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FF880BAD2FA7C9EA0012D6F2 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFED71C72F3E854A000EA4BD /* MetalKit.framework */; };
+		FF880BAF2FA7C9EA0012D6F2 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF880BAE2FA7C9EA0012D6F2 /* Metal.framework */; };
+		FF880BD02FAAAAC60012D6F2 /* Metal4c.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF880B4A2FA7C8DC0012D6F2 /* Metal4c.framework */; };
+		FF880BD12FAAAAED0012D6F2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF880B022FA7C8210012D6F2 /* main.m */; };
+		FF880BD92FAAB0260012D6F2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF880BD82FAAB0260012D6F2 /* Cocoa.framework */; };
+		FF880C172FABEE4C0012D6F2 /* Metal4c.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF880B4A2FA7C8DC0012D6F2 /* Metal4c.framework */; };
+		FF880C462FAF928A0012D6F2 /* Metal4c.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF880B4A2FA7C8DC0012D6F2 /* Metal4c.framework */; };
+		FF880C472FAF92DB0012D6F2 /* Metal4cApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF880C382FAF89530012D6F2 /* Metal4cApp.framework */; };
+		FF880C4A2FAF930C0012D6F2 /* Metal4c.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF880B4A2FA7C8DC0012D6F2 /* Metal4c.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		FF880B4E2FA7C8DC0012D6F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FFED71352F3BD4B3000EA4BD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF880B492FA7C8DC0012D6F2;
+			remoteInfo = Metal4c;
+		};
+		FF880C182FABEE5A0012D6F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FFED71352F3BD4B3000EA4BD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF880B492FA7C8DC0012D6F2;
+			remoteInfo = Metal4c;
+		};
+		FF880C252FAD0E240012D6F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FFED71352F3BD4B3000EA4BD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF880B492FA7C8DC0012D6F2;
+			remoteInfo = Metal4c;
+		};
+		FF880C482FAF92FE0012D6F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FFED71352F3BD4B3000EA4BD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF880C372FAF89530012D6F2;
+			remoteInfo = Metal4cApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FF880B562FA7C8DC0012D6F2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FF880B512FA7C8DC0012D6F2 /* Metal4c.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		FFED713D2F3BD4B3000EA4BD /* Metal4C.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal4C.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF880AF42FA7C8210012D6F2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FF880AF52FA7C8210012D6F2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FF880AF72FA7C8210012D6F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FF880AFD2FA7C8210012D6F2 /* Lenna_test_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Lenna_test_image.png; sourceTree = "<group>"; };
+		FF880AFE2FA7C8210012D6F2 /* LocalShaders.mtl */ = {isa = PBXFileReference; lastKnownFileType = text; path = LocalShaders.mtl; sourceTree = "<group>"; };
+		FF880AFF2FA7C8210012D6F2 /* LocalShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalShaderTypes.h; sourceTree = "<group>"; };
+		FF880B022FA7C8210012D6F2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FF880B1A2FA7C8210012D6F2 /* rgb.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = rgb.txt; sourceTree = "<group>"; };
+		FF880B1E2FA7C8210012D6F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		FF880B3E2FA7C8B50012D6F2 /* hello_metal4c */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = hello_metal4c; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF880B4A2FA7C8DC0012D6F2 /* Metal4c.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Metal4c.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF880BAE2FA7C9EA0012D6F2 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		FF880BD42FAAAF630012D6F2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		FF880BD82FAAB0260012D6F2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		FF880C1E2FAD0E0B0012D6F2 /* window_metal4c */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = window_metal4c; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF880C382FAF89530012D6F2 /* Metal4cApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Metal4cApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFED713D2F3BD4B3000EA4BD /* Metal4c_test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal4c_test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFED71C72F3E854A000EA4BD /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		FF880BB02FA7CAA40012D6F2 /* Exceptions for "Metal4C_Framework" folder in "Metal4c_test" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				metal_math_utils.c,
+				metal_math_utils.m,
+				metal4c_buffers.c,
+				metal4c_context.c,
+				metal4c_hash_dict.c,
+				metal4c_hash_table.m,
+				metal4c_matrix.c,
+				metal4c_renderer.m,
+				metal4c_samplers.c,
+				metal4c_shaders.c,
+				metal4c_shaders.metal,
+				metal4c_textures.c,
+				metal4c_vertex_eng.c,
+				metal4c_window.m,
+				metal4c_x11_colors.c,
+				metal4c.c,
+			);
+			target = FFED713C2F3BD4B3000EA4BD /* Metal4c_test */;
+		};
+		FF880BCD2FA7CE330012D6F2 /* Exceptions for "Metal4C_Framework" folder in "Metal4c" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				metal_math_utils.c,
+				metal_math_utils.h,
+				metal_math_utils.m,
+				metal4c_buffers.c,
+				metal4c_context.c,
+				metal4c_context.h,
+				metal4c_defs.h,
+				metal4c_formats.h,
+				metal4c_hash_dict.c,
+				metal4c_hash_dict.h,
+				metal4c_hash_table.h,
+				metal4c_hash_table.m,
+				metal4c_matrix.c,
+				metal4c_renderer_extern.h,
+				metal4c_renderer.h,
+				metal4c_renderer.m,
+				metal4c_samplers.c,
+				metal4c_shader_types.h,
+				metal4c_shaders.c,
+				metal4c_textures.c,
+				metal4c_types.h,
+				metal4c_vertex_eng.c,
+				metal4c_window.h,
+				metal4c_window.m,
+				metal4c_x11_colors.c,
+				metal4c_x11_colors.h,
+				metal4c.c,
+				metal4c.h,
+			);
+			publicHeaders = (
+				metal4c_defs.h,
+				metal4c_formats.h,
+				metal4c_shader_types.h,
+				metal4c_types.h,
+				metal4c_window.h,
+				metal4c.h,
+			);
+			target = FF880B492FA7C8DC0012D6F2 /* Metal4c */;
+		};
+		FF880C3C2FAF89530012D6F2 /* Exceptions for "Metal4cApp" folder in "Metal4cApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			publicHeaders = (
+				metal4cApp.h,
+			);
+			target = FF880C372FAF89530012D6F2 /* Metal4cApp */;
+		};
+		FF880C522FAF9A2F0012D6F2 /* Exceptions for "hello_metal4c" folder in "Metal4cApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				main.m,
+			);
+			target = FF880C372FAF89530012D6F2 /* Metal4cApp */;
+		};
+		FF880C532FAF9A2F0012D6F2 /* Exceptions for "hello_metal4c" folder in "hello_metal4c" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				main.m,
+			);
+			target = FF880B3D2FA7C8B50012D6F2 /* hello_metal4c */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		FFFCAC7E2F52632C00C1D30D /* Exceptions for "Metal4C" folder in "Copy Bundle Resources" phase from "Metal4C" target */ = {
+		FF880C742FB0DED60012D6F2 /* Exceptions for "Metal4C_Framework" folder in "Copy Bundle Resources" phase from "Metal4c" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = FF880B482FA7C8DC0012D6F2 /* Resources */;
+			membershipExceptions = (
+				metal4c_shader_types.h,
+				metal4c_shaders.metal,
+			);
+		};
+		FF880C772FB0E09B0012D6F2 /* Exceptions for "Metal4C_Framework" folder in "Copy Bundle Resources" phase from "Metal4c_test" target */ = {
 			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
 			buildPhase = FFED713B2F3BD4B3000EA4BD /* Resources */;
 			membershipExceptions = (
-				LocalShaderTypes.h,
 				metal4c_shader_types.h,
 			);
 		};
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		FFED713F2F3BD4B3000EA4BD /* Metal4C */ = {
+		FF880C1F2FAD0E0B0012D6F2 /* window_metal4c */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = window_metal4c;
+			sourceTree = "<group>";
+		};
+		FF880C392FAF89530012D6F2 /* Metal4cApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				FFFCAC7E2F52632C00C1D30D /* Exceptions for "Metal4C" folder in "Copy Bundle Resources" phase from "Metal4C" target */,
+				FF880C3C2FAF89530012D6F2 /* Exceptions for "Metal4cApp" folder in "Metal4cApp" target */,
 			);
-			path = Metal4C;
+			path = Metal4cApp;
+			sourceTree = "<group>";
+		};
+		FF880C502FAF9A2F0012D6F2 /* hello_metal4c */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FF880C522FAF9A2F0012D6F2 /* Exceptions for "hello_metal4c" folder in "Metal4cApp" target */,
+				FF880C532FAF9A2F0012D6F2 /* Exceptions for "hello_metal4c" folder in "hello_metal4c" target */,
+			);
+			path = hello_metal4c;
+			sourceTree = "<group>";
+		};
+		FF880C682FB0DDC80012D6F2 /* Metal4c_shaders */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Metal4c_shaders;
+			sourceTree = "<group>";
+		};
+		FFED713F2F3BD4B3000EA4BD /* Metal4C_Framework */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FF880BCD2FA7CE330012D6F2 /* Exceptions for "Metal4C_Framework" folder in "Metal4c" target */,
+				FF880C742FB0DED60012D6F2 /* Exceptions for "Metal4C_Framework" folder in "Copy Bundle Resources" phase from "Metal4c" target */,
+				FF880BB02FA7CAA40012D6F2 /* Exceptions for "Metal4C_Framework" folder in "Metal4c_test" target */,
+				FF880C772FB0E09B0012D6F2 /* Exceptions for "Metal4C_Framework" folder in "Copy Bundle Resources" phase from "Metal4c_test" target */,
+			);
+			path = Metal4C_Framework;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		FF880B3B2FA7C8B50012D6F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF880C172FABEE4C0012D6F2 /* Metal4c.framework in Frameworks */,
+				FF880BD92FAAB0260012D6F2 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF880B472FA7C8DC0012D6F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF880BAF2FA7C9EA0012D6F2 /* Metal.framework in Frameworks */,
+				FF880BAD2FA7C9EA0012D6F2 /* MetalKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF880C1B2FAD0E0B0012D6F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF880C4A2FAF930C0012D6F2 /* Metal4c.framework in Frameworks */,
+				FF880C472FAF92DB0012D6F2 /* Metal4cApp.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF880C352FAF89530012D6F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF880C462FAF928A0012D6F2 /* Metal4c.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FFED713A2F3BD4B3000EA4BD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFED71C82F3E854A000EA4BD /* MetalKit.framework in Frameworks */,
+				FF880BD02FAAAAC60012D6F2 /* Metal4c.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FF880BB12FA7CBEC0012D6F2 /* TestApp */ = {
+			isa = PBXGroup;
+			children = (
+				FF880AF42FA7C8210012D6F2 /* AppDelegate.h */,
+				FF880AF52FA7C8210012D6F2 /* AppDelegate.m */,
+				FF880AFD2FA7C8210012D6F2 /* Lenna_test_image.png */,
+				FF880AFE2FA7C8210012D6F2 /* LocalShaders.mtl */,
+				FF880AFF2FA7C8210012D6F2 /* LocalShaderTypes.h */,
+				FF880B022FA7C8210012D6F2 /* main.m */,
+				FF880B032FA7C8210012D6F2 /* MainMenu.xib */,
+				FF880B1A2FA7C8210012D6F2 /* rgb.txt */,
+				FF880AF72FA7C8210012D6F2 /* Assets.xcassets */,
+			);
+			path = TestApp;
+			sourceTree = "<group>";
+		};
 		FFED71342F3BD4B3000EA4BD = {
 			isa = PBXGroup;
 			children = (
-				FFED713F2F3BD4B3000EA4BD /* Metal4C */,
+				FF880BB12FA7CBEC0012D6F2 /* TestApp */,
+				FFED713F2F3BD4B3000EA4BD /* Metal4C_Framework */,
+				FF880C392FAF89530012D6F2 /* Metal4cApp */,
+				FF880C502FAF9A2F0012D6F2 /* hello_metal4c */,
+				FF880C1F2FAD0E0B0012D6F2 /* window_metal4c */,
+				FF880C682FB0DDC80012D6F2 /* Metal4c_shaders */,
 				FFED71722F3BE328000EA4BD /* Frameworks */,
 				FFED713E2F3BD4B3000EA4BD /* Products */,
 			);
@@ -61,7 +318,11 @@
 		FFED713E2F3BD4B3000EA4BD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FFED713D2F3BD4B3000EA4BD /* Metal4C.app */,
+				FFED713D2F3BD4B3000EA4BD /* Metal4c_test.app */,
+				FF880B3E2FA7C8B50012D6F2 /* hello_metal4c */,
+				FF880B4A2FA7C8DC0012D6F2 /* Metal4c.framework */,
+				FF880C1E2FAD0E0B0012D6F2 /* window_metal4c */,
+				FF880C382FAF89530012D6F2 /* Metal4cApp.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -69,6 +330,9 @@
 		FFED71722F3BE328000EA4BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FF880BD82FAAB0260012D6F2 /* Cocoa.framework */,
+				FF880BD42FAAAF630012D6F2 /* AppKit.framework */,
+				FF880BAE2FA7C9EA0012D6F2 /* Metal.framework */,
 				FFED71C72F3E854A000EA4BD /* MetalKit.framework */,
 			);
 			name = Frameworks;
@@ -76,27 +340,131 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		FF880B452FA7C8DC0012D6F2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF880C332FAF89530012D6F2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		FFED713C2F3BD4B3000EA4BD /* Metal4C */ = {
+		FF880B3D2FA7C8B50012D6F2 /* hello_metal4c */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FFED714C2F3BD4B4000EA4BD /* Build configuration list for PBXNativeTarget "Metal4C" */;
+			buildConfigurationList = FF880B442FA7C8B50012D6F2 /* Build configuration list for PBXNativeTarget "hello_metal4c" */;
 			buildPhases = (
-				FFED71392F3BD4B3000EA4BD /* Sources */,
-				FFED713A2F3BD4B3000EA4BD /* Frameworks */,
-				FFED713B2F3BD4B3000EA4BD /* Resources */,
+				FF880B3A2FA7C8B50012D6F2 /* Sources */,
+				FF880B3B2FA7C8B50012D6F2 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF880C192FABEE5A0012D6F2 /* PBXTargetDependency */,
+			);
+			name = hello_metal4c;
+			packageProductDependencies = (
+			);
+			productName = hello_metal4c;
+			productReference = FF880B3E2FA7C8B50012D6F2 /* hello_metal4c */;
+			productType = "com.apple.product-type.tool";
+		};
+		FF880B492FA7C8DC0012D6F2 /* Metal4c */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF880B532FA7C8DC0012D6F2 /* Build configuration list for PBXNativeTarget "Metal4c" */;
+			buildPhases = (
+				FF880B452FA7C8DC0012D6F2 /* Headers */,
+				FF880B462FA7C8DC0012D6F2 /* Sources */,
+				FF880B472FA7C8DC0012D6F2 /* Frameworks */,
+				FF880B482FA7C8DC0012D6F2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Metal4c;
+			packageProductDependencies = (
+			);
+			productName = Metal4c;
+			productReference = FF880B4A2FA7C8DC0012D6F2 /* Metal4c.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		FF880C1D2FAD0E0B0012D6F2 /* window_metal4c */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF880C222FAD0E0B0012D6F2 /* Build configuration list for PBXNativeTarget "window_metal4c" */;
+			buildPhases = (
+				FF880C1A2FAD0E0B0012D6F2 /* Sources */,
+				FF880C1B2FAD0E0B0012D6F2 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF880C262FAD0E240012D6F2 /* PBXTargetDependency */,
+				FF880C492FAF92FE0012D6F2 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				FF880C1F2FAD0E0B0012D6F2 /* window_metal4c */,
+			);
+			name = window_metal4c;
+			packageProductDependencies = (
+			);
+			productName = window_metal4c;
+			productReference = FF880C1E2FAD0E0B0012D6F2 /* window_metal4c */;
+			productType = "com.apple.product-type.tool";
+		};
+		FF880C372FAF89530012D6F2 /* Metal4cApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF880C3D2FAF89530012D6F2 /* Build configuration list for PBXNativeTarget "Metal4cApp" */;
+			buildPhases = (
+				FF880C332FAF89530012D6F2 /* Headers */,
+				FF880C342FAF89530012D6F2 /* Sources */,
+				FF880C352FAF89530012D6F2 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				FFED713F2F3BD4B3000EA4BD /* Metal4C */,
+				FF880C392FAF89530012D6F2 /* Metal4cApp */,
+				FF880C502FAF9A2F0012D6F2 /* hello_metal4c */,
 			);
-			name = Metal4C;
+			name = Metal4cApp;
+			packageProductDependencies = (
+			);
+			productName = Metal4cApp;
+			productReference = FF880C382FAF89530012D6F2 /* Metal4cApp.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		FFED713C2F3BD4B3000EA4BD /* Metal4c_test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FFED714C2F3BD4B4000EA4BD /* Build configuration list for PBXNativeTarget "Metal4c_test" */;
+			buildPhases = (
+				FFED71392F3BD4B3000EA4BD /* Sources */,
+				FFED713A2F3BD4B3000EA4BD /* Frameworks */,
+				FFED713B2F3BD4B3000EA4BD /* Resources */,
+				FF880B562FA7C8DC0012D6F2 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF880B4F2FA7C8DC0012D6F2 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				FFED713F2F3BD4B3000EA4BD /* Metal4C_Framework */,
+			);
+			name = Metal4c_test;
 			packageProductDependencies = (
 			);
 			productName = Metal4C;
-			productReference = FFED713D2F3BD4B3000EA4BD /* Metal4C.app */;
+			productReference = FFED713D2F3BD4B3000EA4BD /* Metal4c_test.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -108,6 +476,18 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
+					FF880B3D2FA7C8B50012D6F2 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					FF880B492FA7C8DC0012D6F2 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					FF880C1D2FAD0E0B0012D6F2 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					FF880C372FAF89530012D6F2 = {
+						CreatedOnToolsVersion = 26.3;
+					};
 					FFED713C2F3BD4B3000EA4BD = {
 						CreatedOnToolsVersion = 26.2;
 						LastSwiftMigration = 2620;
@@ -128,32 +508,298 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FFED713C2F3BD4B3000EA4BD /* Metal4C */,
+				FF880B492FA7C8DC0012D6F2 /* Metal4c */,
+				FF880C372FAF89530012D6F2 /* Metal4cApp */,
+				FFED713C2F3BD4B3000EA4BD /* Metal4c_test */,
+				FF880B3D2FA7C8B50012D6F2 /* hello_metal4c */,
+				FF880C1D2FAD0E0B0012D6F2 /* window_metal4c */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		FFED713B2F3BD4B3000EA4BD /* Resources */ = {
+		FF880B482FA7C8DC0012D6F2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FFED713B2F3BD4B3000EA4BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF880B312FA7C8210012D6F2 /* Assets.xcassets in Resources */,
+				FF880B332FA7C8210012D6F2 /* Lenna_test_image.png in Resources */,
+				FF880B342FA7C8210012D6F2 /* LocalShaders.mtl in Resources */,
+				FF880B352FA7C8210012D6F2 /* MainMenu.xib in Resources */,
+				FF880B382FA7C8210012D6F2 /* LocalShaderTypes.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		FFED71392F3BD4B3000EA4BD /* Sources */ = {
+		FF880B3A2FA7C8B50012D6F2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FF880B462FA7C8DC0012D6F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF880C1A2FAD0E0B0012D6F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF880C342FAF89530012D6F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FFED71392F3BD4B3000EA4BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF880B1F2FA7C8210012D6F2 /* AppDelegate.m in Sources */,
+				FF880BD12FAAAAED0012D6F2 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		FF880B4F2FA7C8DC0012D6F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF880B492FA7C8DC0012D6F2 /* Metal4c */;
+			targetProxy = FF880B4E2FA7C8DC0012D6F2 /* PBXContainerItemProxy */;
+		};
+		FF880C192FABEE5A0012D6F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF880B492FA7C8DC0012D6F2 /* Metal4c */;
+			targetProxy = FF880C182FABEE5A0012D6F2 /* PBXContainerItemProxy */;
+		};
+		FF880C262FAD0E240012D6F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF880B492FA7C8DC0012D6F2 /* Metal4c */;
+			targetProxy = FF880C252FAD0E240012D6F2 /* PBXContainerItemProxy */;
+		};
+		FF880C492FAF92FE0012D6F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF880C372FAF89530012D6F2 /* Metal4cApp */;
+			targetProxy = FF880C482FAF92FE0012D6F2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FF880B032FA7C8210012D6F2 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF880B1E2FA7C8210012D6F2 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		FF880B422FA7C8B50012D6F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development: tempest6502@icloud.com (W2ZY494UZG)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A54HA75PNX;
+				ENABLE_HARDENED_RUNTIME = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FF880B432FA7C8B50012D6F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development: tempest6502@icloud.com (W2ZY494UZG)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A54HA75PNX;
+				ENABLE_HARDENED_RUNTIME = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		FF880B542FA7C8DC0012D6F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development: tempest6502@icloud.com (W2ZY494UZG)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = A54HA75PNX;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "Team-Larson.Metal4c";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		FF880B552FA7C8DC0012D6F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development: tempest6502@icloud.com (W2ZY494UZG)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = A54HA75PNX;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "Team-Larson.Metal4c";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		FF880C232FAD0E0B0012D6F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A54HA75PNX;
+				ENABLE_HARDENED_RUNTIME = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FF880C242FAD0E0B0012D6F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A54HA75PNX;
+				ENABLE_HARDENED_RUNTIME = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		FF880C3E2FAF89530012D6F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = A54HA75PNX;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "Team-Larson.Metal4cApp";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		FF880C3F2FAF89530012D6F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = A54HA75PNX;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = "Team-Larson.Metal4cApp";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		FFED714A2F3BD4B4000EA4BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -391,6 +1037,42 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		FF880B442FA7C8B50012D6F2 /* Build configuration list for PBXNativeTarget "hello_metal4c" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF880B422FA7C8B50012D6F2 /* Debug */,
+				FF880B432FA7C8B50012D6F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF880B532FA7C8DC0012D6F2 /* Build configuration list for PBXNativeTarget "Metal4c" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF880B542FA7C8DC0012D6F2 /* Debug */,
+				FF880B552FA7C8DC0012D6F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF880C222FAD0E0B0012D6F2 /* Build configuration list for PBXNativeTarget "window_metal4c" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF880C232FAD0E0B0012D6F2 /* Debug */,
+				FF880C242FAD0E0B0012D6F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF880C3D2FAF89530012D6F2 /* Build configuration list for PBXNativeTarget "Metal4cApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF880C3E2FAF89530012D6F2 /* Debug */,
+				FF880C3F2FAF89530012D6F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FFED71382F3BD4B3000EA4BD /* Build configuration list for PBXProject "Metal4C" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -400,7 +1082,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FFED714C2F3BD4B4000EA4BD /* Build configuration list for PBXNativeTarget "Metal4C" */ = {
+		FFED714C2F3BD4B4000EA4BD /* Build configuration list for PBXNativeTarget "Metal4c_test" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FFED714D2F3BD4B4000EA4BD /* Debug */,
