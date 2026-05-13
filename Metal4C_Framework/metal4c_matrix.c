@@ -12,7 +12,6 @@
 
 #include "metal4c.h"
 #include "metal4c_context.h"
-#include "metal4c_Renderer_Extern.h"
 #include "metal4c_hash_table.h"
 #include "metal_math_utils.h"
 

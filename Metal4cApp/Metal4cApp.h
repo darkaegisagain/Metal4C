@@ -30,6 +30,7 @@ extern void mouseup(MTuint window, MTuint x, MTuint y);
 extern void mousedragged(MTuint window, MTuint x, MTuint y, MTuint dx, MTuint dy);
 
 // global variables for current state
+extern MTuint width, height;
 extern MTbool cursor_in_window;
 extern MTuint mouse_x;
 extern MTuint mouse_y;
@@ -37,6 +38,7 @@ extern MTuint prev_mouse_x;
 extern MTuint prev_mouse_y;
 extern MTushort key;
 extern MTuint keycode;
+extern MTbool keypressed;
 
 // these allow the handlers to be defined and not found by the app
 void mtSetMouseDownHandler(MTuint window, void (*mouse_event)(MTuint window, MTuint x, MTuint y));

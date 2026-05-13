@@ -13,7 +13,6 @@
 #include <mach/vm_map.h>
 
 #include "metal4c_formats.h"
-
 #include "metal4c_hash_table.h"
 #include "metal_math_utils.h"
 
@@ -135,8 +134,6 @@ typedef struct {
 
 typedef struct {
     MTuint                  name;
-    MTuint                  bindings_mask;
-    MTBuffer                *vertex_buffers[MAX_BUFFER_BINDINGS];
     MTuint                  vertex_desc_mask;
     MTVertexArrayBinding    vertex_arrays[MAX_BUFFER_BINDINGS];
     MTShaderBinding         vertex_shader_binding;
@@ -305,6 +302,12 @@ typedef struct MTRenderContextRec_t {
 
         MTVertexArray   *vao;
         
+        MTuint          vertex_bindings_mask;
+        MTBuffer        *vertex_buffers[MAX_BUFFER_BINDINGS];
+
+        MTuint          fragment_bindings_mask;
+        MTBuffer        *fragment_buffers[MAX_BUFFER_BINDINGS];
+
         MTBuffer        *index_buffer;
         MTBuffer        *instance_buffer;
 

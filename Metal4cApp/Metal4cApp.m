@@ -9,9 +9,9 @@
 #import <MetalKit/MetalKit.h>
 #include <dlfcn.h>
 
-#include "metal4c.h"
+#include <Metal4c/Metal4c.h>
+
 #include "metal4c_context.h"
-#include "metal4c_Renderer_Extern.h"
 #include "metal4c_hash_table.h"
 #include "metal4c_window.h"
 

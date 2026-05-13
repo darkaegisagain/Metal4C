@@ -11,7 +11,6 @@
 
 #include "metal4c.h"
 #include "metal4c_context.h"
-#include "metal4c_Renderer_Extern.h"
 #include "metal4c_hash_table.h"
 
 #import "metal4c_window.h"
@@ -21,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 static HashTable *gWindowTable = NULL;
 
 // globals used by metal4cApp
+MTuint width, height;
 MTuint cursor_in_window = false;
 MTuint mouse_x;
 MTuint mouse_y;
@@ -28,7 +28,7 @@ MTuint prev_mouse_x;
 MTuint prev_mouse_y;
 MTushort key;
 MTuint keycode;
-
+MTbool keypressed = false;
 
 @interface Metal4cView()
 
@@ -171,6 +171,7 @@ do { \
 
     // the global var keycode is set on keydown
     keycode = ((MTuint)flags << 16) | (MTuint)key;
+    keypressed = true;
     
     if(_keydown)
     {
@@ -182,6 +183,8 @@ do { \
 
 - (void)keyUp:(NSEvent *)event
 {
+    keypressed = false;
+
     if(_keyup)
     {
         unsigned short keycode;
@@ -226,6 +229,9 @@ do { \
     [_window makeKeyAndOrderFront:nil];
     [NSApp activateIgnoringOtherApps:YES];
     
+    width = frame.size.width;
+    height = frame.size.height;
+    
     _ctx = mtCreateContext();
     assert(_ctx);
     
@@ -263,6 +269,9 @@ do { \
     {
         _resize(m4cview.mt_window, (MTuint)size.width, (MTuint)size.height);
     }
+    
+    width = size.width;
+    height = size.height;
 }
 @end
 
@@ -328,6 +337,5 @@ Metal4cView *mtGetViewPtr(MTuint window)
     
     return [m4cwin view];
 }
-
 
 NS_ASSUME_NONNULL_END

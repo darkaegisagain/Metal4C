@@ -560,6 +560,75 @@
     _num_pipeline_state_per_swap++;
 }
 
+- (void)bindVertexBuffers
+{
+    for(int i=0; i<MAX_VERTEX_ATTIBS; i++)
+    {
+        // early exit
+        if (STATE(vertex_bindings_mask >> i) == 0)
+        {
+            break;
+        }
+
+        if (STATE(vertex_buffers[i]))
+        {
+            MTBuffer *buf;
+            
+            buf = STATE(vertex_buffers[i]);
+
+            id<MTLBuffer> mtl_buf;
+
+            mtl_buf = (__bridge id<MTLBuffer>)(buf->mtl_buffer);
+
+            if (buf->dirty & (DIRTY_BUFFER_DATA | DIRTY_BUFFER_ADDRESS))
+            {
+                mtl_buf = [self updateBuffer:buf];
+            }
+            else if (mtl_buf == NULL)
+            {
+                mtl_buf = [self updateBuffer:buf];
+            }
+
+            [_currentRenderEncoder setVertexBuffer: mtl_buf offset:0 atIndex: i];
+        }
+    }
+}
+
+- (void)bindFragmentBuffers
+{
+    for(int i=0; i<MAX_VERTEX_ATTIBS; i++)
+    {
+        // early exit
+        if (STATE(fragment_bindings_mask >> i) == 0)
+        {
+            break;
+        }
+
+        if (STATE(fragment_buffers[i]))
+        {
+            MTBuffer *buf;
+            
+            buf = STATE(fragment_buffers[i]);
+
+            id<MTLBuffer> mtl_buf;
+
+            mtl_buf = (__bridge id<MTLBuffer>)(buf->mtl_buffer);
+
+            if (buf->dirty & (DIRTY_BUFFER_DATA | DIRTY_BUFFER_ADDRESS))
+            {
+                mtl_buf = [self updateBuffer:buf];
+            }
+            else if (mtl_buf == NULL)
+            {
+                mtl_buf = [self updateBuffer:buf];
+            }
+
+            [_currentRenderEncoder setFragmentBuffer:mtl_buf offset:0 atIndex: i];
+        }
+    }
+}
+
+
 // update any state for the current RenderEncoder
 - (void)updateCurrentRenderEncoder
 {
@@ -622,35 +691,14 @@
     
     if (STATE(vao))
     {
-        for(int i=0; i<MAX_VERTEX_ATTIBS; i++)
+        // shouldn't be here with no vertex bindings
+        assert(STATE(vertex_bindings_mask));
+        
+        [self bindVertexBuffers];
+        
+        if (STATE(fragment_bindings_mask))
         {
-            // early exit
-            if ((STATE(vao)->bindings_mask >> i) == 0)
-            {
-                break;
-            }
-
-            if (STATE(vao)->vertex_buffers[i])
-            {
-                MTBuffer *buf;
-                
-                buf = STATE(vao)->vertex_buffers[i];
-
-                id<MTLBuffer> mtl_buf;
-
-                mtl_buf = (__bridge id<MTLBuffer>)(buf->mtl_buffer);
-
-                if (buf->dirty & (DIRTY_BUFFER_DATA | DIRTY_BUFFER_ADDRESS))
-                {
-                    mtl_buf = [self updateBuffer:buf];
-                }
-                else if (mtl_buf == NULL)
-                {
-                    mtl_buf = [self updateBuffer:buf];
-                }
-
-                [_currentRenderEncoder setVertexBuffer: mtl_buf offset:0 atIndex: i];
-            }
+            [self bindFragmentBuffers];
         }
     }
     else
@@ -842,74 +890,99 @@
     }
 }
 
-- (void) updateVAOBuffers
+- (void)updateDirtyBuffer:(MTBuffer *)buf
+{
+    id<MTLBuffer> mtl_buf;
+    
+    mtl_buf = [self updateBuffer:buf];
+    
+    void *ptr;
+    
+    ptr = [mtl_buf contents];
+    assert(ptr);
+    
+    MTDirtyRegion *dirty_rgn;
+    
+    unsigned dirty_region_count = 0;
+    
+    dirty_rgn = &buf->dirty_region;
+    while(dirty_rgn)
+    {
+        memcpy(ptr + dirty_rgn->offset, (void *)buf->data + dirty_rgn->offset, dirty_rgn->size);
+        
+        NSRange range;
+        
+        range = NSMakeRange(dirty_rgn->offset, dirty_rgn->size);
+        
+        [mtl_buf didModifyRange: range];
+        
+        dirty_region_count++;
+        // printf("dirty_region_count: %d offset:%zul size:%zul\n",
+        //        dirty_region_count, dirty_rgn->offset, dirty_rgn->size);
+        
+        if (dirty_rgn != &buf->dirty_region)
+        {
+            MTDirtyRegion *temp;
+            
+            temp = dirty_rgn->next;
+            
+            // put region on free list
+            dirty_rgn->next = _ctx->free_dirty_region_list;
+            _ctx->free_dirty_region_list = dirty_rgn;
+            
+            dirty_rgn = temp;
+        }
+        else
+        {
+            dirty_rgn = dirty_rgn->next;
+        }
+    }
+    
+    buf->dirty_region.offset = 0;
+    buf->dirty_region.size = 0;
+    buf->dirty_region.next = NULL;
+    
+    buf->dirty &= ~DIRTY_BUFFER_DATA;
+}
+
+- (void) updateBoundBuffers
 {
     for(int i=0; i<MAX_VERTEX_ATTIBS; i++)
     {
-        if ((STATE(vao)->bindings_mask >> i) == 0)
+        if (STATE(vertex_bindings_mask >> i) == 0)
         {
             break;
         }
         
-        if (STATE(vao)->vertex_buffers[i])
+        if (STATE(vertex_buffers[i]))
         {
             MTBuffer *buf;
             
-            buf = STATE(vao)->vertex_buffers[i];
+            buf = STATE(vertex_buffers[i]);
             
             if (buf->dirty & DIRTY_BUFFER_DATA)
             {
-                id<MTLBuffer> mtl_buf;
-                
-                mtl_buf = [self updateBuffer:buf];
-                
-                void *ptr;
-                
-                ptr = [mtl_buf contents];
-                assert(ptr);
-                
-                MTDirtyRegion *dirty_rgn;
-                
-                unsigned dirty_region_count = 0;
-                
-                dirty_rgn = &buf->dirty_region;
-                while(dirty_rgn)
-                {
-                    memcpy(ptr + dirty_rgn->offset, (void *)buf->data + dirty_rgn->offset, dirty_rgn->size);
-                    
-                    NSRange range;
-                    
-                    range = NSMakeRange(dirty_rgn->offset, dirty_rgn->size);
-                    
-                    [mtl_buf didModifyRange: range];
-                    
-                    dirty_region_count++;
-                    // printf("dirty_region_count: %d offset:%zul size:%zul\n",
-                    //        dirty_region_count, dirty_rgn->offset, dirty_rgn->size);
-                    
-                    if (dirty_rgn != &buf->dirty_region)
-                    {
-                        MTDirtyRegion *temp;
-                        
-                        temp = dirty_rgn->next;
-                        
-                        // put region on free list
-                        dirty_rgn->next = _ctx->free_dirty_region_list;
-                        _ctx->free_dirty_region_list = dirty_rgn;
-                        
-                        dirty_rgn = temp;
-                    }
-                    else
-                    {
-                        dirty_rgn = dirty_rgn->next;
-                    }
-                }
-                
-                buf->dirty_region.offset = 0;
-                buf->dirty_region.size = 0;
-                buf->dirty_region.next = NULL;
-                
-                buf->dirty &= ~DIRTY_BUFFER_DATA;
+                [self updateDirtyBuffer: buf];
+            }
+        }
+    }
+    
+    for(int i=0; i<MAX_VERTEX_ATTIBS; i++)
+    {
+        if (STATE(fragment_bindings_mask >> i) == 0)
+        {
+            break;
+        }
+        
+        if (STATE(fragment_buffers[i]))
+        {
+            MTBuffer *buf;
+            
+            buf = STATE(fragment_buffers[i]);
+            
+            if (buf->dirty & DIRTY_BUFFER_DATA)
+            {
+                [self updateDirtyBuffer: buf];
             }
         }
     }
@@ -943,7 +1016,7 @@
     {
         if (STATE(vao))
         {
-            [self updateVAOBuffers];
+            [self updateBoundBuffers];
         }
     }
 
@@ -1311,7 +1384,7 @@ void mtlDrawArray(MTRenderContextRec *mt_ctx, MTDrawArrayPrimitive *draw)
         
         if (error)
         {
-            error = 0;
+            *error = 0;
         }
     }
     else if (error)

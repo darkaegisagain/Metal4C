@@ -26,4 +26,3 @@ typedef struct {
 @end
 #endif // __OBJC__
 
-#include "metal4c_Renderer_Extern.h"

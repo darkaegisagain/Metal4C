@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF47AACD2FB3EE6800FCE2B6 /* Metal4c.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF880B4A2FA7C8DC0012D6F2 /* Metal4c.framework */; };
+		FF47AACE2FB3EE6800FCE2B6 /* Metal4cApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF880C382FAF89530012D6F2 /* Metal4cApp.framework */; };
 		FF880B1F2FA7C8210012D6F2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF880AF52FA7C8210012D6F2 /* AppDelegate.m */; };
 		FF880B312FA7C8210012D6F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF880AF72FA7C8210012D6F2 /* Assets.xcassets */; };
 		FF880B332FA7C8210012D6F2 /* Lenna_test_image.png in Resources */ = {isa = PBXBuildFile; fileRef = FF880AFD2FA7C8210012D6F2 /* Lenna_test_image.png */; };
@@ -26,6 +28,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		FF47AACB2FB3EE5800FCE2B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FFED71352F3BD4B3000EA4BD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF880C372FAF89530012D6F2;
+			remoteInfo = Metal4cApp;
+		};
 		FF880B4E2FA7C8DC0012D6F2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FFED71352F3BD4B3000EA4BD /* Project object */;
@@ -57,6 +66,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		FF47AAC22FB3EE4C00FCE2B6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FF880B562FA7C8DC0012D6F2 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -71,6 +89,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FF47AAC42FB3EE4C00FCE2B6 /* mandelbrot */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = mandelbrot; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF880AF42FA7C8210012D6F2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FF880AF52FA7C8210012D6F2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		FF880AF72FA7C8210012D6F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -110,7 +129,7 @@
 				metal4c_vertex_eng.c,
 				metal4c_window.m,
 				metal4c_x11_colors.c,
-				metal4c.c,
+				Metal4c.c,
 			);
 			target = FFED713C2F3BD4B3000EA4BD /* Metal4c_test */;
 		};
@@ -130,7 +149,6 @@
 				metal4c_hash_table.h,
 				metal4c_hash_table.m,
 				metal4c_matrix.c,
-				metal4c_renderer_extern.h,
 				metal4c_renderer.h,
 				metal4c_renderer.m,
 				metal4c_samplers.c,
@@ -143,8 +161,8 @@
 				metal4c_window.m,
 				metal4c_x11_colors.c,
 				metal4c_x11_colors.h,
-				metal4c.c,
-				metal4c.h,
+				Metal4c.c,
+				Metal4c.h,
 			);
 			publicHeaders = (
 				metal4c_defs.h,
@@ -152,34 +170,42 @@
 				metal4c_shader_types.h,
 				metal4c_types.h,
 				metal4c_window.h,
-				metal4c.h,
+				Metal4c.h,
 			);
 			target = FF880B492FA7C8DC0012D6F2 /* Metal4c */;
 		};
 		FF880C3C2FAF89530012D6F2 /* Exceptions for "Metal4cApp" folder in "Metal4cApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			publicHeaders = (
-				metal4cApp.h,
+				Metal4cApp.h,
 			);
 			target = FF880C372FAF89530012D6F2 /* Metal4cApp */;
 		};
 		FF880C522FAF9A2F0012D6F2 /* Exceptions for "hello_metal4c" folder in "Metal4cApp" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				main.m,
+				hello_metal4c.m,
 			);
 			target = FF880C372FAF89530012D6F2 /* Metal4cApp */;
 		};
 		FF880C532FAF9A2F0012D6F2 /* Exceptions for "hello_metal4c" folder in "hello_metal4c" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				main.m,
+				hello_metal4c.m,
 			);
 			target = FF880B3D2FA7C8B50012D6F2 /* hello_metal4c */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		FF47AB202FB4DA6B00FCE2B6 /* Exceptions for "mandelbrot" folder in "Copy Files" phase from "mandelbrot" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = FF47AAC22FB3EE4C00FCE2B6 /* CopyFiles */;
+			membershipExceptions = (
+				mandelbrot_shader.metal,
+				mandelbrot_types.h,
+			);
+		};
 		FF880C742FB0DED60012D6F2 /* Exceptions for "Metal4C_Framework" folder in "Copy Bundle Resources" phase from "Metal4c" target */ = {
 			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
 			buildPhase = FF880B482FA7C8DC0012D6F2 /* Resources */;
@@ -198,6 +224,14 @@
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		FF47AAC52FB3EE4C00FCE2B6 /* mandelbrot */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FF47AB202FB4DA6B00FCE2B6 /* Exceptions for "mandelbrot" folder in "Copy Files" phase from "mandelbrot" target */,
+			);
+			path = mandelbrot;
+			sourceTree = "<group>";
+		};
 		FF880C1F2FAD0E0B0012D6F2 /* window_metal4c */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = window_metal4c;
@@ -220,11 +254,6 @@
 			path = hello_metal4c;
 			sourceTree = "<group>";
 		};
-		FF880C682FB0DDC80012D6F2 /* Metal4c_shaders */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Metal4c_shaders;
-			sourceTree = "<group>";
-		};
 		FFED713F2F3BD4B3000EA4BD /* Metal4C_Framework */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -239,6 +268,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		FF47AAC12FB3EE4C00FCE2B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF47AACD2FB3EE6800FCE2B6 /* Metal4c.framework in Frameworks */,
+				FF47AACE2FB3EE6800FCE2B6 /* Metal4cApp.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FF880B3B2FA7C8B50012D6F2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -309,7 +347,7 @@
 				FF880C392FAF89530012D6F2 /* Metal4cApp */,
 				FF880C502FAF9A2F0012D6F2 /* hello_metal4c */,
 				FF880C1F2FAD0E0B0012D6F2 /* window_metal4c */,
-				FF880C682FB0DDC80012D6F2 /* Metal4c_shaders */,
+				FF47AAC52FB3EE4C00FCE2B6 /* mandelbrot */,
 				FFED71722F3BE328000EA4BD /* Frameworks */,
 				FFED713E2F3BD4B3000EA4BD /* Products */,
 			);
@@ -323,6 +361,7 @@
 				FF880B4A2FA7C8DC0012D6F2 /* Metal4c.framework */,
 				FF880C1E2FAD0E0B0012D6F2 /* window_metal4c */,
 				FF880C382FAF89530012D6F2 /* Metal4cApp.framework */,
+				FF47AAC42FB3EE4C00FCE2B6 /* mandelbrot */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -358,6 +397,29 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		FF47AAC32FB3EE4C00FCE2B6 /* mandelbrot */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF47AAC82FB3EE4C00FCE2B6 /* Build configuration list for PBXNativeTarget "mandelbrot" */;
+			buildPhases = (
+				FF47AAC02FB3EE4C00FCE2B6 /* Sources */,
+				FF47AAC12FB3EE4C00FCE2B6 /* Frameworks */,
+				FF47AAC22FB3EE4C00FCE2B6 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF47AACC2FB3EE5800FCE2B6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				FF47AAC52FB3EE4C00FCE2B6 /* mandelbrot */,
+			);
+			name = mandelbrot;
+			packageProductDependencies = (
+			);
+			productName = mandelbrot;
+			productReference = FF47AAC42FB3EE4C00FCE2B6 /* mandelbrot */;
+			productType = "com.apple.product-type.tool";
+		};
 		FF880B3D2FA7C8B50012D6F2 /* hello_metal4c */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FF880B442FA7C8B50012D6F2 /* Build configuration list for PBXNativeTarget "hello_metal4c" */;
@@ -476,6 +538,9 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
+					FF47AAC32FB3EE4C00FCE2B6 = {
+						CreatedOnToolsVersion = 26.3;
+					};
 					FF880B3D2FA7C8B50012D6F2 = {
 						CreatedOnToolsVersion = 26.3;
 					};
@@ -513,6 +578,7 @@
 				FFED713C2F3BD4B3000EA4BD /* Metal4c_test */,
 				FF880B3D2FA7C8B50012D6F2 /* hello_metal4c */,
 				FF880C1D2FAD0E0B0012D6F2 /* window_metal4c */,
+				FF47AAC32FB3EE4C00FCE2B6 /* mandelbrot */,
 			);
 		};
 /* End PBXProject section */
@@ -540,6 +606,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		FF47AAC02FB3EE4C00FCE2B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FF880B3A2FA7C8B50012D6F2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -580,6 +653,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		FF47AACC2FB3EE5800FCE2B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF880C372FAF89530012D6F2 /* Metal4cApp */;
+			targetProxy = FF47AACB2FB3EE5800FCE2B6 /* PBXContainerItemProxy */;
+		};
 		FF880B4F2FA7C8DC0012D6F2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FF880B492FA7C8DC0012D6F2 /* Metal4c */;
@@ -614,6 +692,28 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		FF47AAC92FB3EE4C00FCE2B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A54HA75PNX;
+				ENABLE_HARDENED_RUNTIME = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FF47AACA2FB3EE4C00FCE2B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A54HA75PNX;
+				ENABLE_HARDENED_RUNTIME = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		FF880B422FA7C8B50012D6F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1037,6 +1137,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		FF47AAC82FB3EE4C00FCE2B6 /* Build configuration list for PBXNativeTarget "mandelbrot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF47AAC92FB3EE4C00FCE2B6 /* Debug */,
+				FF47AACA2FB3EE4C00FCE2B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FF880B442FA7C8B50012D6F2 /* Build configuration list for PBXNativeTarget "hello_metal4c" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -13,7 +13,6 @@
 
 #include "metal4c.h"
 #include "metal4c_context.h"
-#include "metal4c_Renderer_Extern.h"
 #include "metal4c_hash_table.h"
 
 size_t page_size_align(size_t size)
@@ -179,12 +178,27 @@ void mtBufferData(MTuint buffer, MTsizei size, MTsizei offset, void *data)
         for(int i=0; i<MAX_VERTEX_ATTIBS; i++)
         {
             // early exit
-            if ((STATE(vao)->bindings_mask >> i) == 0)
+            if (STATE(vertex_bindings_mask >> i) == 0)
             {
                 break;
             }
 
-            if (STATE(vao)->vertex_buffers[i] == buf)
+            if (STATE(vertex_buffers[i]) == buf)
+            {
+                _ctx->dirty_state |= DIRTY_BUFFER;
+                break;
+            }
+        }
+
+        for(int i=0; i<MAX_VERTEX_ATTIBS; i++)
+        {
+            // early exit
+            if (STATE(fragment_bindings_mask >> i) == 0)
+            {
+                break;
+            }
+
+            if (STATE(fragment_buffers[i]) == buf)
             {
                 _ctx->dirty_state |= DIRTY_BUFFER;
                 break;
@@ -351,17 +365,11 @@ void mtBindVertexArray(MTuint name)
     _ctx->dirty_state |= DIRTY_RENDER_STATE;
 }
 
-void mtBindArrayBuffer(MTuint name, MTuint unit)
+void mtBindVertexBuffer(MTuint name, MTuint unit)
 {
     if (unit >= MAX_BUFFER_BINDINGS)
     {
         mtWarningFunc("unit >= MAX_BUFFER_BINDINGS", __FUNCTION__);
-        return;
-    }
-    
-    if (STATE(vao) == NULL)
-    {
-        mtWarningFunc("no vertex array bound", __FUNCTION__);
         return;
     }
     
@@ -376,16 +384,49 @@ void mtBindArrayBuffer(MTuint name, MTuint unit)
             return;
         }
 
-        STATE(vao)->bindings_mask |= (0x1 << unit);
+        STATE(vertex_bindings_mask) |= (0x1 << unit);
     }
     else
     {
         buf = NULL;
 
-        STATE(vao)->bindings_mask &= ~(0x1 << unit);
+        STATE(vertex_bindings_mask) &= ~(0x1 << unit);
     }
     
-    STATE(vao)->vertex_buffers[unit] = buf;
+    STATE(vertex_buffers[unit]) = buf;
+    
+    _ctx->dirty_state |= DIRTY_RENDER_STATE | DIRTY_BUFFER;
+}
+
+void mtBindFragmentBuffer(MTuint name, MTuint unit)
+{
+    if (unit >= MAX_BUFFER_BINDINGS)
+    {
+        mtWarningFunc("unit >= MAX_BUFFER_BINDINGS", __FUNCTION__);
+        return;
+    }
+    
+    MTBuffer *buf;
+
+    if (name)
+    {
+        buf = getBuffer(name, __FUNCTION__);
+        
+        if (buf == NULL)
+        {
+            return;
+        }
+
+        STATE(fragment_bindings_mask) |= (0x1 << unit);
+    }
+    else
+    {
+        buf = NULL;
+
+        STATE(fragment_bindings_mask) &= ~(0x1 << unit);
+    }
+    
+    STATE(fragment_buffers[unit]) = buf;
     
     _ctx->dirty_state |= DIRTY_RENDER_STATE | DIRTY_BUFFER;
 }

@@ -9,7 +9,7 @@
 #define metal4c_defs_h
 
 #ifndef metal4c_types_h
-#include "metal4c_types.h"
+#include <Metal4c/metal4c_types.h>
 #endif
 
 #define MAX_TEXTURE_UNITS               8

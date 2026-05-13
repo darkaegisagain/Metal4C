@@ -9,7 +9,7 @@
 #define metal4c_types_h
 
 #ifndef metal4c_formats_h
-#include "metal4c_formats.h"
+#include <Metal4c/metal4c_formats.h>
 #endif
 
 typedef unsigned int    MTuint;

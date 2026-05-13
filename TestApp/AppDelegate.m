@@ -2510,7 +2510,7 @@ void setTex0(Vertex4ColorNormalTex *verts, MTuint index, float s, float t)
     _vertex_buffer = mtCreateBuffer(36 * sizeof(Vertex4ColorNormalTex), 0, NULL);
     _index_buffer = mtCreateBuffer(36 * sizeof(MTuint), 0, NULL);
 
-    mtBindArrayBuffer(_vertex_buffer, 0);
+    mtBindVertexBuffer(_vertex_buffer, 0);
     
     mtVertexDesc(0, MTVertexFormatFloat4, 0, 0, sizeof(Vertex4ColorNormalTex), 1, MTVertexStepFunctionPerVertex);
         

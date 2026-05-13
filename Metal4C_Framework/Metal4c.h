@@ -11,9 +11,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "metal4c_defs.h"
-#include "metal4c_formats.h"
-#include "metal4c_shader_types.h"
+#include <Metal4c/metal4c_defs.h>
+#include <Metal4c/metal4c_formats.h>
+#include <Metal4c/metal4c_shader_types.h>
 
 /*
  Metal4C C API
@@ -269,8 +269,6 @@ void mtDeleteBuffer(MTuint buffer);
 */
 MTuint mtCreateVertexArray(void);
 void mtBindVertexArray(MTuint vao);
-void mtBindArrayBuffer(MTuint name, MTuint unit);
-
 void mtDeleteVertexArray(MTuint vao);
 
 void mtVertexDescAttr(MTuint unit, MTenum format, MTuint offset, MTuint buffer_index);
@@ -279,9 +277,11 @@ void mtVertexDesc(MTuint unit, MTenum format, MTuint offset, MTuint buffer_index
                   MTuint stride, MTenum step_function, MTuint step_rate);
 void mtClearDesc(MTuint unit);
 
+void mtBindVertexBuffer(MTuint name, MTuint unit);
+void mtBindFragmentBuffer(MTuint name, MTuint unit);
+
 void mtBindIndexBuffer(MTuint name);
 void mtBindInstanceBuffer(MTuint name);
-
 
 /*
  VAO draw calls
@@ -303,12 +303,16 @@ void mtDrawElementsOffsetInstanceBase(MTPrimitiveType type, MTIndexType index_ty
  - mtBind*Texture/mtBind*Sampler: Bind textures and samplers to shader stages at indices.
 */
 MTuint mtCreateShaderLibrary(const char *str);
+MTuint mtCreateShaderLibraryFromFile(const char *path);
 
 void mtBindImmModeVertexShader(MTVertexShaderMode vertex_rendermode, MTFragmentShaderMode fragment_rendermode, MTuint lib, const char *vertex);
 void mtBindImmModeFragmentShader(MTVertexShaderMode vertex_rendermode, MTFragmentShaderMode fragment_rendermode, MTuint lib, const char *fragment);
 
 void mtBindVertexShaderToVertexArray(MTuint vao, MTuint lib, const char *vertex);
 void mtBindFragmentShaderShaderToVertexArray(MTuint vao,MTuint lib, const char *fragment);
+
+void mtBindVertexTexture(MTuint name, MTuint index);
+void mtBindVertexSampler(MTuint name, MTuint index);
 
 void mtBindVertexTexture(MTuint name, MTuint index);
 void mtBindVertexSampler(MTuint name, MTuint index);
